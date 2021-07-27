@@ -7,4 +7,5 @@ There are 4 versions of Beneath the Mask that the website can choose, depending 
 - Beneath the Mask ~ Night theme (18:00 - 5:59)
 - Beneath the Mask -rain, instrumental version- ~ Rainy/snowy day theme
 - Beneath the Mask -rain- ~ Rainy/snowy night theme
+
 These conditions mirror when these versions would play in the actual game.
