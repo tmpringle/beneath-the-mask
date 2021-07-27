@@ -1,4 +1,4 @@
-# beneath-the-mask
+# Beneath the Mask...
 A simple website that plays a version of "Beneath the Mask" from Persona 5, depending on the weather and day conditions in your area.
 Inspired largely by the tane.us Animal Crossing music website my Brian Lee (https://tane.us/ac/), and utilizes the OpenWeather Current Weather Data API (https://openweathermap.org/current).
 
