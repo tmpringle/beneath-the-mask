@@ -93,22 +93,43 @@ function onPlayerReady(event) {
     player.playVideo();
 }
 
-// loop when video ends
+// loops video when it ends; checks weather first
 function onPlayerStateChange(event) {
     if (event.data === 0) {
+        checkNewWeather();
         refreshVid();
     }
 }
 
-// checks on weather periodically
-function weatherInterval() {
+// waits for weather to be determined before looping/loading new video
+function refreshVid() {
+    if (isReady) {
+        refreshPlayer();
+    } else {
+        setTimeout(refreshVid, 50)
+    }
+}
+
+// loads new video and plays it
+function refreshPlayer() {
+    player.loadVideoById(getVidId());
+    player.playVideo();
+}
+
+// fetches weather data from API
+function checkNewWeather() {
     isReady = false;
     fetchWeatherData();
-    newWeatherCheck();
+}
+
+// checks on weather periodically
+function weatherInterval() {
+    checkNewWeather();
+    compareWeather();
 }
 
 // compares new weather conditions to old
-function newWeatherCheck() {
+function compareWeather() {
     let isRainingNow;
     let isDayNow;
 
@@ -116,19 +137,13 @@ function newWeatherCheck() {
         isRainingNow = getRaining();
         isDayNow = getDaytime();
 
-        // refreshes video if conditions changed
+        // loads new video if conditions changed
         if (isRaining != isRainingNow || isDay != isDayNow) {
-            refreshVid();
+            refreshPlayer();
         }
     } else {
-        setTimeout(newWeatherCheck, 300);
+        setTimeout(compareWeather, 300);
     }
-}
-
-// loads new video and plays it
-function refreshVid() {
-    player.loadVideoById(getVidId());
-    player.playVideo();
 }
 
 // sets up location for first-time use
