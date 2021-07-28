@@ -118,8 +118,10 @@ function refreshPlayer() {
 
 // fetches weather data from API
 function checkNewWeather() {
-    isReady = false;
-    fetchWeatherData();
+    if (!isLocationBlocked) {
+        isReady = false;
+        fetchWeatherData();
+    }
 }
 
 // checks on weather periodically

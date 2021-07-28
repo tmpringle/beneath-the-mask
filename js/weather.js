@@ -9,6 +9,9 @@ var curWeatherId;
 // marks when weather-gathering code is finished so video id can be chosen
 var isReady;
 
+// if a user blocks the location request, the website won't check the weather for the rest of their visit
+var isLocationBlocked;
+
 // requests user location
 function getLocation() {
     if (navigator.geolocation) {
@@ -39,14 +42,15 @@ function fetchWeatherData() {
         .then(function() { // video can now be loaded
             isReady = true;
         })
-        .catch(() => {
-            error();
+        .catch(() => { // video can now be loaded, although weather is unknown
+            console.log("Weather could not be determined.");
+            isReady = true;
         });
 }
 
-// user blocked location request, or API call was unsuccessful
+// user blocked location request
 function error() {
-    alert("Weather could not be determined.");
+    isLocationBlocked = true;
 
     // video can now be loaded, although weather is unknown
     isReady = true;
