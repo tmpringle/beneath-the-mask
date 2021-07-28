@@ -8,4 +8,4 @@ There are 4 versions of Beneath the Mask that the website can choose, based on c
 - Beneath the Mask -rain, instrumental version- ~ Rainy/snowy day theme
 - Beneath the Mask -rain- ~ Rainy/snowy night theme
 
-By default, the website checks for weather and day/night changes every 5 minutes once the page loads.
+By default, the website checks for weather and day/night changes every 5 minutes once the page loads. However, if a user blocks their location, the website won't check for the weather.
