@@ -38,6 +38,7 @@ function fetchWeatherData() {
         .then(response => response.json())
         .then(data => {
             curWeatherId = data.weather[0]["id"];
+            setWeatherIcon();
         })
         .then(function() { // video can now be loaded
             isReady = true;
@@ -69,4 +70,22 @@ function setCityUrl(city) {
 
 function setCityIdUrl(cityId) {
     url = `http://api.openweathermap.org/data/2.5/weather?id=${cityId}&APPID=${apiKey}`
+}
+
+// sets weather icon based on weather conditions
+function setWeatherIcon() {
+    if (curWeatherId < 599) {           // rainy, but now snowy
+        displayWeatherIcon("rainy");
+    } else if (curWeatherId < 700) {    // snowy
+        displayWeatherIcon("snowy");
+    } else if (curWeatherId === 800) {  // clear skies
+        displayWeatherIcon("sunny");
+    } else {                            // cloudy
+        displayWeatherIcon("cloudy");
+    }
+}
+
+// places weather icon on webpage
+function displayWeatherIcon(condition) {
+    document.getElementById('weather-icon').src = `./images/${condition}.gif`;
 }
