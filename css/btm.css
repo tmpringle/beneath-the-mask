@@ -9,3 +9,10 @@ body {
     transform: translate(-50%, -50%);
     box-shadow: 7px 7px;
 }
+
+#weather-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(-25%, -25%)
+}
