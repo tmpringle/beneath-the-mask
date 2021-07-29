@@ -84,7 +84,7 @@ function onYouTubeIframeAPIReady() {
             }
         });
     } else {
-        setTimeout(onYouTubeIframeAPIReady, 300);
+        setTimeout(onYouTubeIframeAPIReady, 50);
     }
 }
 
@@ -144,7 +144,7 @@ function compareWeather() {
             refreshPlayer();
         }
     } else {
-        setTimeout(compareWeather, 300);
+        setTimeout(compareWeather, 50);
     }
 }
 
