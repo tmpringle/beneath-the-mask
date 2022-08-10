@@ -32,9 +32,9 @@ function getDaytime() {
 
 // returns where it's raining/snowing
 function getRaining() {
-    if (curWeatherId < 700) { // raining or snowing
+    if (curWeatherId > 3999) {  // raining or snowing
         return true;
-    } else {                  // not raining/snowing or weather unknown
+    } else {                    // not raining/snowing or weather unknown
         return false;
     }
 }
@@ -46,18 +46,14 @@ function getVidId() {
 
     if (!isDay) { // nighttime
         if (isRaining) {
-            console.log("Rainy/snowy night");
             return vidIds[3];
         } else {
-            console.log("Clear/cloudy night");
             return vidIds[1];
         }
     } else { // daytime
         if (isRaining) {
-            console.log("Rainy/snowy day");
             return vidIds[2];
         } else {
-            console.log("Clear/cloudy day");
             return vidIds[0];
         }
     }
@@ -66,26 +62,20 @@ function getVidId() {
 // because of google's autoplay policy (and the fact that this page is not hosted on a server), the video won't autoplay. darn
 var player;
 
-// once API is ready...
+// once API is ready, this function creates the iframe and loads proper video
 function onYouTubeIframeAPIReady() {
-    // waits for location to be determined (using isReady variable and timeout, see weather.js)
-    // then creates iframe and loads proper video
-    if (isReady) {
-        player = new YT.Player('player', {
-            height: '324',
-            width: '576',
-            videoId: getVidId(),
-            playerVars: {
-                'playsinline': 1
-            },
-            events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-            }
-        });
-    } else {
-        setTimeout(onYouTubeIframeAPIReady, 50);
-    }
+    player = new YT.Player('player', {
+        height: '324',
+        width: '576',
+        videoId: getVidId(),
+        playerVars: {
+            'playsinline': 1
+        },
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
 }
 
 // plays video once it's ready on first-time use
@@ -124,12 +114,6 @@ function checkNewWeather() {
     }
 }
 
-// checks on weather periodically
-function weatherInterval() {
-    checkNewWeather();
-    compareWeather();
-}
-
 // compares new weather conditions to old
 function compareWeather() {
     let isRainingNow;
@@ -148,10 +132,38 @@ function compareWeather() {
     }
 }
 
-// sets up location for first-time use
-// ensures video starts playing
-getLocation();
+// checks on weather periodically (if weather-tracking isn't set up or location is blocked, only day/night changes are checked)
+function weatherInterval() {
+    checkNewWeather();
+    compareWeather();
+}
+
+// confirms whether user would like the site to be tailored to the weather in their location
+function weatherConfirm() {
+    if (!isLocationSetUp) {
+        let isWeatherConfirmed = confirm("Would you like the video to change based on the weather where you are? We will not store or process your location data in any way.");
+
+        if (isWeatherConfirmed) {
+            isLocationSetUp = true;
+            weatherStart();
+        }
+    }
+}
+
+// weather checking begins
+function weatherStart() {
+    isReady = false;
+
+    // sets up location for first-time use
+    getLocation();
+
+    // resets the player now that weather-tracking is enabled
+    refreshVid();
+}
+
+// this is here to make sure the compareWeather function runs smoothly when only day/night changes are checked
+isReady = true;
 
 // checks on weather (and day/night changes) every 5 minutes
 // you can change the amount of time between each interval by modifying the number below
-window.setInterval(weatherInterval, 300000);
+window.setInterval(weatherInterval, 1000 * 60 * 5);

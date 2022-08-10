@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/btm.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arsenal:wght@700&display=swap" rel="stylesheet">
     <title>Beneath the Mask...</title>
-    <!-- by MathyWizard, 2021 -->
+    <!-- by MathyWizard, 2022 -->
     <!-- Music by Shoji Meguro, copyright Atlus, Sega -->
     <script id="www-widgetapi-script" src="https://www.youtube.com/s/player/408a20d8/www-widgetapi.vflset/www-widgetapi.js" async></script>
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -16,6 +19,12 @@
 <body>
     <div id="player"></div>
 
-    <img id="weather-icon">
+    <img id="weather-icon" onclick="weatherConfirm()">
 </body>
+<script type="text/javascript">
+    // this just places down the default weather icon.
+    // i had to place this line here instead of in one of my other script files because JS didn't believe that the img element had loaded yet.
+    // oh well
+    displayWeatherIcon();
+</script>
 </html>
