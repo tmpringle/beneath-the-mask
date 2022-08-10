@@ -11,12 +11,13 @@ var curWeatherId;
 // marks when weather-gathering code is finished so video id can be chosen
 var isReady;
 
-// if a user blocks the location request, the website won't check the weather for the rest of their visit
-var isLocationBlocked;
+// if a user blocks the location request, the website won't check the weather during their visit
+// by default this is set to true, as users have to request weather tracking
+var isLocationBlocked = true;
 
 // makes sure that location can only be set up once, hopefully causing less tomfoolery
-// unfortunately, if a user clicks "OK" on the prompt to start setting up the weather but doesn't actually allow the site permission to their location,
-// they have to refresh if they do want to allow weather tracking.
+// unfortunately, if a user clicks "OK" on the prompt to start setting up the weather but actually blocks the site's access to their location,
+// they have to refresh if they want to allow weather tracking.
 var isLocationSetUp;
 
 // requests user location
@@ -30,6 +31,8 @@ function getLocation() {
 
 // sets up user location if requested and calls function to fetch weather data
 function success(position) {
+    isLocationBlocked = false;
+
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
 
@@ -58,10 +61,8 @@ function fetchWeatherData() {
 }
 
 // user blocked location request
+// video can now be loaded, although weather is unknown
 function error() {
-    isLocationBlocked = true;
-
-    // video can now be loaded, although weather is unknown
     isReady = true;
 }
 

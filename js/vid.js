@@ -62,26 +62,20 @@ function getVidId() {
 // because of google's autoplay policy (and the fact that this page is not hosted on a server), the video won't autoplay. darn
 var player;
 
-// once API is ready...
+// once API is ready, this function creates the iframe and loads proper video
 function onYouTubeIframeAPIReady() {
-    // waits for location to be determined (using isReady variable and timeout, see weather.js)
-    // then creates iframe and loads proper video
-    if (isReady) {
-        player = new YT.Player('player', {
-            height: '324',
-            width: '576',
-            videoId: getVidId(),
-            playerVars: {
-                'playsinline': 1
-            },
-            events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-            }
-        });
-    } else {
-        setTimeout(onYouTubeIframeAPIReady, 50);
-    }
+    player = new YT.Player('player', {
+        height: '324',
+        width: '576',
+        videoId: getVidId(),
+        playerVars: {
+            'playsinline': 1
+        },
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
 }
 
 // plays video once it's ready on first-time use
@@ -138,7 +132,7 @@ function compareWeather() {
     }
 }
 
-// checks on weather periodically
+// checks on weather periodically (if weather-tracking isn't set up or location is blocked, only day/night changes are checked)
 function weatherInterval() {
     checkNewWeather();
     compareWeather();
@@ -165,11 +159,11 @@ function weatherStart() {
 
     // resets the player now that weather-tracking is enabled
     refreshVid();
-
-    // checks on weather (and day/night changes) every 5 minutes
-    // you can change the amount of time between each interval by modifying the number below
-    window.setInterval(weatherInterval, 1000 * 60 * 5);
 }
 
-// it begins
+// this is here to make sure the compareWeather function runs smoothly when only day/night changes are checked
 isReady = true;
+
+// checks on weather (and day/night changes) every 5 minutes
+// you can change the amount of time between each interval by modifying the number below
+window.setInterval(weatherInterval, 1000 * 60 * 5);
