@@ -14,10 +14,22 @@
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="js/apiKey.js"></script>
     <script src="js/weather.js"></script>
+    <script src="js/calendar.js"></script>
     <script src="js/vid.js"></script>
     <script src="js/btmIds.js"></script>
+    <!-- temporary formatting for date text -->
+    <style>
+        h1 {
+            font-family: "Arsenal";
+            color: white;
+        }
+    </style>
 </head>
 <body>
+    <div id="calendar">
+        <h1>Date Placeholder</h1>
+    </div>
+
     <div id="player"></div>
 
     <img id="weather-icon" onclick="weatherConfirm()">
@@ -27,5 +39,8 @@
     // i had to place this line here instead of in one of my other script files because JS didn't believe that the img element had loaded yet.
     // oh well
     displayWeatherIcon();
+
+    // same thing for the calendar element...
+    displayCalendar();
 </script>
 </html>
