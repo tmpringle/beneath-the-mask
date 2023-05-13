@@ -17,6 +17,22 @@ body {
     transform: translate(-25%, -25%)
 }
 
+canvas {
+    position: absolute;
+}
+
+#foreground-canvas {
+    z-index: 3;
+}
+
+#middle-canvas {
+    z-index: 2;
+}
+
+#background-canvas {
+    z-index: 1;
+}
+
 @media(max-width:960px) {
     #player {
         width: 60vw;
