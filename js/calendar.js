@@ -1,3 +1,6 @@
+// a potential image loader i could use:
+// https://thinkpixellab.com/pxloader/
+
 // self-explanatory (months are indexed from 0)
 function getCurrentMonth() {
     return new Date().getMonth() + 1;
@@ -13,28 +16,17 @@ function getCurrentDay() {
     return new Date().getDay();
 }
 
-
-function displayCalendar() {
-    let month = getCurrentMonth();
-    let date = getCurrentDate();
-    let dayOfWeek = getCurrentDay();
-
-    drawCalendar(month, date, dayOfWeek);
-}
-
 function drawCalendar(month, date, dayOfWeek) {
+    // the elements for each layer canvas
     const backCanvas = document.getElementById("background-canvas");
-    const backContext = backCanvas.getContext("2d");
-
     const midCanvas = document.getElementById("middle-canvas");
-    const midContext = midCanvas.getContext("2d");
-
     const foreCanvas = document.getElementById("foreground-canvas");
-    const foreContext = foreCanvas.getContext("2d");
 
+    // the first and second digits of the date of the month (1-31)
     let dateDigit1;
     let dateDigit2;
 
+    // sets first and second digits of the current date of the month
     if (date >= 10) {
         dateDigit1 = Math.floor(date / 10);
         dateDigit2 = date % 10;
@@ -49,66 +41,98 @@ function drawCalendar(month, date, dayOfWeek) {
     }
 */
 
-/* for now, before i come up with a better system, i could make functions for
-   the months, dates, and days of the week that take in an image, a context,
-   and a pixel position
-*/
+/* i'll probably also need custom rendering for each month and digit */
 
-    const monthDigitF = new Image();
-    monthDigitF.onload = function() {
-        foreContext.drawImage(monthDigitF, 19, 24);
-    };
-    monthDigitF.src = `images/calendar/months/m${month}f.png`;
+    // draws the month sprites
+    const monthDigitF = displayMonthLayer(month, foreCanvas, "f", 19, 24);
+    const monthDigitM = displayMonthLayer(month, midCanvas, "m", 9, 15);
+    const monthDigitB = displayMonthLayer(month, backCanvas, "b", 0, 10);
 
-    const monthDigitM = new Image();
-    monthDigitM.onload = function() {
-        midContext.drawImage(monthDigitM, 9, 15);
-    };
-    monthDigitM.src = `images/calendar/months/m${month}m.png`;
+    // draws the first date digit sprites
+    const dateDigit1F = displayFirstDigitLayer(dateDigit1, foreCanvas, "f", 83, 14);
+    const dateDigit1M = displayFirstDigitLayer(dateDigit1, midCanvas, "m", 65, 5);
+    const dateDigit1B = displayFirstDigitLayer(dateDigit1, backCanvas, "b", 55, 0);
 
-    const monthDigitB = new Image();
-    monthDigitB.onload = function() {
-        backContext.drawImage(monthDigitB, 0, 10);
-    };
-    monthDigitB.src = `images/calendar/months/m${month}b.png`;
-
-    const dateDigit1F = new Image();
-    dateDigit1F.onload = function() {
-        foreContext.drawImage(dateDigit1F, 83, 14);
-    };
-    dateDigit1F.src = `images/calendar/dates/${dateDigit1}f.png`;
-
-    const dateDigit1M = new Image();
-    dateDigit1M.onload = function() {
-        midContext.drawImage(dateDigit1M, 65, 5);
-    };
-    dateDigit1M.src = `images/calendar/dates/${dateDigit1}m.png`;
-
-    const dateDigit1B = new Image();
-    dateDigit1B.onload = function() {
-        backContext.drawImage(dateDigit1B, 55, 0);
-    };
-    dateDigit1B.src = `images/calendar/dates/${dateDigit1}b.png`;
-
+    // draws the second date digit sprites
     if (date >= 10) {
-        const dateDigit2F = new Image();
-        dateDigit2F.onload = function() {
-            foreContext.drawImage(dateDigit2F, 128, 14);
-        };
-        dateDigit2F.src = `images/calendar/dates/${dateDigit2}f.png`;
-        
-        const dateDigit2M = new Image();
-        dateDigit2M.onload = function() {
-            midContext.drawImage(dateDigit2M, 115, 5);
-        };
-        dateDigit2M.src = `images/calendar/dates/${dateDigit2}m.png`;
-        
-        const dateDigit2B = new Image();
-        dateDigit2B.onload = function() {
-            backContext.drawImage(dateDigit2B, 106, 0);
-        };
-        dateDigit2B.src = `images/calendar/dates/${dateDigit2}b.png`;
+        const dateDigit2F = displaySecondDigitLayer(dateDigit2, foreCanvas, "f", 128, 14);
+        const dateDigit2M = displaySecondDigitLayer(dateDigit2, midCanvas, "m", 115, 5);
+        const dateDigit2B = displaySecondDigitLayer(dateDigit2, backCanvas, "b", 106, 0);
     }
+}
+
+// function that actual draws a layer of the month sprite onto the canvas
+// and returns an Image object representing the sprite
+//
+// month - number of the current month (1-12)
+// canvas - the canvas layer we're drawing onto
+// layer - represents which canvas layer we're drawing on to (f, m, b)
+// px - the pixel x position of the top-left corner of the sprite on the canvas
+// py - the pixel y position of the top-left corner of the sprite on the canvas
+function displayMonthLayer(month, canvas, layer, px, py) {
+    let context = canvas.getContext("2d");
+
+    var spriteImg = new Image();
+    spriteImg.onload = function() {
+        context.drawImage(spriteImg, px, py);
+    }
+    spriteImg.src = `images/calendar/months/m${month}${layer}.png`
+
+    return spriteImg;
+}
+
+// function that actual draws a layer of the sprite for the first date digit
+// onto the canvas and returns an Image object representing the sprite
+//
+// dateDigit - first digit of the date (1-9)
+// canvas - the canvas layer we're drawing onto
+// layer - represents which canvas layer we're drawing on to (f, m, b)
+// px - the pixel x position of the top-left corner of the sprite on the canvas
+// py - the pixel y position of the top-left corner of the sprite on the canvas
+function displayFirstDigitLayer(dateDigit, canvas, layer, px, py) {
+    let context = canvas.getContext("2d");
+
+    var spriteImg = new Image();
+    spriteImg.onload = function() {
+        context.drawImage(spriteImg, px, py);
+    }
+    spriteImg.src = `images/calendar/dates/${dateDigit}${layer}.png`
+
+    return spriteImg;
+}
+
+// function that actual draws a layer of the sprite for the second date digit
+// onto the canvas and returns an Image object representing the sprite
+// 
+// for now, this has the same functionality as the display function for the
+// first date digit. the first and second digits of the calendar are displayed
+// differently in Persona 5, though, so the functionality will be slightly
+// differently in the end product.
+//
+// dateDigit - second digit of the date (0-9)
+// canvas - the canvas layer we're drawing onto
+// layer - represents which canvas layer we're drawing on to (f, m, b)
+// px - the pixel x position of the top-left corner of the sprite on the canvas
+// py - the pixel y position of the top-left corner of the sprite on the canvas
+function displaySecondDigitLayer(dateDigit, canvas, layer, px, py) {
+    let context = canvas.getContext("2d");
+
+    var spriteImg = new Image();
+    spriteImg.onload = function() {
+        context.drawImage(spriteImg, px, py);
+    }
+    spriteImg.src = `images/calendar/dates/${dateDigit}${layer}.png`
+
+    return spriteImg;
+}
+
+
+function displayCalendar() {
+    let month = getCurrentMonth();
+    let date = getCurrentDate();
+    let dayOfWeek = getCurrentDay();
+
+    drawCalendar(month, date, dayOfWeek);
 }
 
 // TODO: implement checking for date changes
