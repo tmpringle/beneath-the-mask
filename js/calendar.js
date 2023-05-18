@@ -28,6 +28,9 @@ function getCurrentDay() {
 */
 
 function drawCalendar(month, date, dayOfWeek) {
+    // JUST FOR TESTING!!!
+    month = 12;
+
     // draws the month sprites
 //    displayMonthLayer(month, foreCanvas, "f");
 //    displayMonthLayer(month, midCanvas, "m");
@@ -58,103 +61,98 @@ function displayMonthBackLayer(month, date) {
     }
 
     // draws the sprite based on the month
-    switch(month) {
-        case 1:
-            spriteImg.onload = function() {
-                context.save();
-                context.scale(1.5, 1.5);
+    spriteImg.onload = function() {
+        context.save();
+        context.scale(1.5, 1.5);
 
+        switch(month) {
+            case 1:  // january
                 if (doesDateHaveTwoDigits) {
                     context.drawImage(spriteImg, 21, 21);
                 } else {
                     context.drawImage(spriteImg, 41, 21);
                 }
-                
-                context.restore();
-            }
-            break;
-        case 2:
-            spriteImg.onload = function() {
-                context.save();
-                context.scale(1.5, 1.5);
-
+                break;
+            case 2:  // february
                 if (doesDateHaveTwoDigits) {
                     context.drawImage(spriteImg, 16, 19);
                 } else {
                     context.drawImage(spriteImg, 36, 19);
                 }
-
-                context.restore();
-            }
-            break;
-        case 3:
-            spriteImg.onload = function() {
-                context.save();
-                context.scale(1.5, 1.5);
-
+                break;
+            case 3:  // march
                 if (doesDateHaveTwoDigits) {
                     context.drawImage(spriteImg, 15, 22);
                 } else {
                     context.drawImage(spriteImg, 35, 22);
                 }
-
-                context.restore();
-            }
-            break;
-        case 4:
-            spriteImg.onload = function() {
-                context.save();
-                context.scale(1.5, 1.5);
-
+                break;
+            case 4:  // april
                 if (doesDateHaveTwoDigits) {
                     context.drawImage(spriteImg, 17, 21);
                 } else {
                     context.drawImage(spriteImg, 37, 21);
                 }
-
-                context.restore();
-            }
-            break;
-        case 5:
-            spriteImg.onload = function() {
-                context.save();
-                context.scale(1.5, 1.5);
-
+                break;
+            case 5:  // may
                 if (doesDateHaveTwoDigits) {
                     context.drawImage(spriteImg, 19, 22);
                 } else {
                     context.drawImage(spriteImg, 39, 22);
                 }
-
-                context.restore();
-            }
-            break;
-        case 6:
-            spriteImg.onload = function() {
-                context.save();
-                context.scale(1.5, 1.5);
-
+                break;
+            case 6:  // june
                 if (doesDateHaveTwoDigits) {
                     context.drawImage(spriteImg, 28, 22);
                 } else {
                     context.drawImage(spriteImg, 48, 22);
                 }
+                break;
+            case 7:  // july
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 27, 23);
+                } else {
+                    context.drawImage(spriteImg, 47, 23);
+                }
+                break;
+            case 8:  // august
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 19, 21);
+                } else {
+                    context.drawImage(spriteImg, 39, 21);
+                }
+                break;
+            case 9:  // september
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 17, 22);
+                } else {
+                    context.drawImage(spriteImg, 37, 22);
+                }
+                break;
+            case 10: // october
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 4, 15);
+                } else {
+                    context.drawImage(spriteImg, 24, 15);
+                }
+                break;
+            case 11: // november
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 10, 19);
+                } else {
+                    context.drawImage(spriteImg, 30, 19);
+                }
+                break;
+            case 12: // december
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 4, 12);
+                } else {
+                    context.drawImage(spriteImg, 24, 12);
+                }
+                break;
+        }
 
-                context.restore();
-            }
-            break;
-        case 7:
-            break;
-        case 8:
-            break;
-        case 9:
-            break;
-        case 10:
-            break;
-        case 11:
-            break;
-        case 12:
-            break;
+        context.restore();
     }
 }
 
