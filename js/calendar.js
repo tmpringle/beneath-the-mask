@@ -33,13 +33,127 @@ function drawCalendar(month, date, dayOfWeek) {
 
     // draws the month sprites
 //    displayMonthLayer(month, foreCanvas, "f");
-//    displayMonthLayer(month, midCanvas, "m");
+    displayMonthMidLayer(month, date);
     displayMonthBackLayer(month, date);
 
     // draws the date sprites
 //    displayDateLayer(date, foreCanvas, "f");
 //    displayDateLayer(date, midCanvas, "m");
 //    displayDateLayer(date, backCanvas, "b");
+}
+
+// function that actual draws the middle layer of the month sprite
+// onto the canvas. date is used for position calculations
+function displayMonthMidLayer(month, date) {
+    let context = document.getElementById("middle-canvas").getContext("2d");
+
+    // sets up the sprite for the month's background
+    var spriteImg = new Image();
+    spriteImg.src = `images/calendar/months/m${month}m.png`;
+
+    // flag that affects the positioning of the month
+    // (month sprite is shifted 20 pixels to the left if date has two digits)
+    let doesDateHaveTwoDigits;
+    if (date >= 10) {
+        doesDateHaveTwoDigits = true;
+    } else {
+        doesDateHaveTwoDigits = false;
+    }
+
+    // draws the sprite based on the month
+    spriteImg.onload = function() {
+        context.save();
+        context.scale(1.5, 1.5);
+
+        switch(month) {
+            case 1:  // january
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 29, 29);
+                } else {
+                    context.drawImage(spriteImg, 49, 29);
+                }
+                break;
+            case 2:  // february
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 23, 24);
+                } else {
+                    context.drawImage(spriteImg, 43, 24);
+                }
+                break;
+            case 3:  // march
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 23, 26);
+                } else {
+                    context.drawImage(spriteImg, 43, 26);
+                }
+                break;
+            case 4:  // april
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 24, 26);
+                } else {
+                    context.drawImage(spriteImg, 44, 26);
+                }
+                break;
+            case 5:  // may
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 27, 28);
+                } else {
+                    context.drawImage(spriteImg, 47, 28);
+                }
+                break;
+            case 6:  // june
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 35, 27);
+                } else {
+                    context.drawImage(spriteImg, 55, 27);
+                }
+                break;
+            case 7:  // july
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 36, 29);
+                } else {
+                    context.drawImage(spriteImg, 56, 29);
+                }
+                break;
+            case 8:  // august
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 30, 26);
+                } else {
+                    context.drawImage(spriteImg, 50, 26);
+                }
+                break;
+            case 9:  // september
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 29, 26);
+                } else {
+                    context.drawImage(spriteImg, 49, 26);
+                }
+                break;
+            case 10: // october
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 8, 21);
+                } else {
+                    context.drawImage(spriteImg, 28, 21);
+                }
+                break;
+            case 11: // november
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 18, 24);
+                } else {
+                    context.drawImage(spriteImg, 38, 24);
+                }
+                break;
+            case 12: // december
+                if (doesDateHaveTwoDigits) {
+                    context.drawImage(spriteImg, 11, 19);
+                } else {
+                    context.drawImage(spriteImg, 31, 19);
+                }
+                break;
+        }
+
+        context.restore();
+    }
 }
 
 // function that actual draws the background layer of the month sprite
