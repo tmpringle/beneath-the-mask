@@ -31,7 +31,7 @@ function getCurrentDay() {
 
 function drawCalendar(month, date, dayOfWeek) {
     // JUST FOR TESTING!!!
-    date = 1;
+    date = 9;
 
     // draws the month sprites
     displayMonthFrontLayer(month, date);
@@ -39,9 +39,9 @@ function drawCalendar(month, date, dayOfWeek) {
     displayMonthBackLayer(month, date);
 
     // draws the date sprites
-//    displayDateLayer(date, foreCanvas, "f");
-//    displayDateLayer(date, midCanvas, "m");
-//    displayDateLayer(date, backCanvas, "b");
+//    displayDateFrontLayer(date);
+//    displayDateMidLayer(date);
+    displayDateBackLayer(date);
 }
 
 // function that actual draws the frontmost layer of the month sprite
@@ -386,24 +386,70 @@ function displayMonthBackLayer(month, date) {
     }
 }
 
-// function that actual draws a layer of the sprite for the first date digit
-// onto the canvas and returns an Image object representing the sprite
-//
-// date - date of the month (1-31)
-// canvas - the canvas layer we're drawing onto
-// layer - represents which canvas layer we're drawing on to (f, m, b)
-// px - the pixel x position of the top-left corner of the sprite on the canvas
-// py - the pixel y position of the top-left corner of the sprite on the canvas
-function displayDateLayer(date, canvas, layer, px, py) {
-    let context = canvas.getContext("2d");
+function displayDateBackLayer(date) {
+    if (date < 10) {
+        displaySmallDateBackLayer(date);
+    } else {
+        let firstDigit = Math.floor(date / 10);
+        let secondDigit = date % 10;
 
-    var spriteImg = new Image();
-    spriteImg.onload = function() {
-        context.drawImage(spriteImg, px, py);
+//        displayFirstDigitDateBackLayer(firstDigit);
+//        displaySecondDigitDateBackLayer(secondDigit);
     }
-    spriteImg.src = `images/calendar/dates/${dateDigit}${layer}.png`
+}
 
-    return spriteImg;
+function displaySmallDateBackLayer(date) {
+    let context = document.getElementById("background-canvas").getContext("2d");
+
+    // sets up the sprite for the month's background
+    var spriteImg = new Image();
+    spriteImg.src = `images/calendar/dates/${date}b.png`;
+
+    spriteImg.onload = function() {
+        context.save();
+        context.scale(1.5, 1.5);
+
+        switch(date) {
+            case 1:
+                context.rotate((Math.PI / 180) * 5.5);
+                context.drawImage(spriteImg, 108, -11);
+                break;
+            case 2:
+                context.rotate((Math.PI / 180) * 5.5);
+                context.drawImage(spriteImg, 108, -3);
+                break;
+            case 3:
+                context.rotate((Math.PI / 180) * 5.7);
+                context.drawImage(spriteImg, 108, -8);
+                break;
+            case 4:
+                context.rotate((Math.PI / 180) * 5.8);
+                context.drawImage(spriteImg, 100, -10);
+                break;
+            case 5:
+                context.rotate((Math.PI / 180) * 5.9);
+                context.drawImage(spriteImg, 103, -7);
+                break;
+            case 6:
+                context.rotate((Math.PI / 180) * 5.9);
+                context.drawImage(spriteImg, 105, -5);
+                break;
+            case 7:
+                context.rotate((Math.PI / 180) * 6.4);
+                context.drawImage(spriteImg, 102, -8);
+                break;
+            case 8:
+                context.rotate((Math.PI / 180) * 6.4);
+                context.drawImage(spriteImg, 104, -11);
+                break;
+            case 9:
+                context.rotate((Math.PI / 180) * 6.75);
+                context.drawImage(spriteImg, 103, -11);
+                break;
+        }
+
+        context.restore();
+    }
 }
 
 function displayCalendar() {
