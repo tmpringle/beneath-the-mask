@@ -30,8 +30,10 @@ function getCurrentDay() {
 */
 
 function drawCalendar(month, date, dayOfWeek) {
+    resetCanvasses();
+
     // JUST FOR TESTING!!!
-    date = 9;
+//    date = 3;
 
     // draws the month sprites
     displayMonthFrontLayer(month, date);
@@ -42,6 +44,13 @@ function drawCalendar(month, date, dayOfWeek) {
 //    displayDateFrontLayer(date);
 //    displayDateMidLayer(date);
     displayDateBackLayer(date);
+}
+
+// function that gets rid of all current drawings on the canvasses
+function resetCanvasses() {
+    document.getElementById("foreground-canvas").getContext("2d").reset();
+    document.getElementById("middle-canvas").getContext("2d").reset();
+    document.getElementById("background-canvas").getContext("2d").reset();
 }
 
 // function that actual draws the frontmost layer of the month sprite
@@ -393,18 +402,19 @@ function displayDateBackLayer(date) {
         let firstDigit = Math.floor(date / 10);
         let secondDigit = date % 10;
 
-//        displayFirstDigitDateBackLayer(firstDigit);
-//        displaySecondDigitDateBackLayer(secondDigit);
+        displayFirstDigitDateBackLayer(firstDigit);
+        displaySecondDigitDateBackLayer(secondDigit);
     }
 }
 
 function displaySmallDateBackLayer(date) {
     let context = document.getElementById("background-canvas").getContext("2d");
 
-    // sets up the sprite for the month's background
+    // sets up the sprite for the date's background
     var spriteImg = new Image();
     spriteImg.src = `images/calendar/dates/${date}b.png`;
 
+    // draws the sprite based on the date
     spriteImg.onload = function() {
         context.save();
         context.scale(1.5, 1.5);
@@ -445,6 +455,102 @@ function displaySmallDateBackLayer(date) {
             case 9:
                 context.rotate((Math.PI / 180) * 6.75);
                 context.drawImage(spriteImg, 103, -11);
+                break;
+        }
+
+        context.restore();
+    }
+}
+
+function displayFirstDigitDateBackLayer(firstDigit) {
+    let context = document.getElementById("background-canvas").getContext("2d");
+
+    // sets up the sprite for the first digit of the date's background
+    var spriteImg = new Image();
+    spriteImg.src = `images/calendar/dates/${firstDigit}b.png`;
+
+    // draws the sprite based on the first digit of the date
+    spriteImg.onload = function() {
+        context.save();
+        context.scale(1.5, 1.5);
+        context.rotate((Math.PI / 180) * -3.5);
+
+        switch(firstDigit) {
+            case 1:
+                context.drawImage(spriteImg, 72, 18);
+                break;
+            case 2:
+                context.drawImage(spriteImg, 73, 27);
+                break;
+            case 3:
+                context.drawImage(spriteImg, 72, 22);
+                break;
+        }
+
+        context.restore();
+    }
+}
+
+function displaySecondDigitDateBackLayer(secondDigit) {
+    let context = document.getElementById("background-canvas").getContext("2d");
+
+    // sets up the sprite for the second digit of the date's background
+    var spriteImg = new Image();
+    spriteImg.src = `images/calendar/dates/${secondDigit}b.png`;
+
+    // draws the sprite based on the second digit of the date
+    spriteImg.onload = function() {
+        context.save();
+
+        switch(secondDigit) {
+            case 0:
+                context.scale(1.5, 1.5);
+                context.rotate((Math.PI / 180) * 0.1);
+                context.drawImage(spriteImg, 125, 5);
+                break;
+            case 1:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 2.9);
+                context.drawImage(spriteImg, 141, -5);
+                break;
+            case 2:
+                context.scale(1.45, 1.45);
+                context.rotate((Math.PI / 180) * 2.3);
+                context.drawImage(spriteImg, 135, 4);
+                break;
+            case 3:
+                context.scale(1.45, 1.45);
+                context.rotate((Math.PI / 180) * 2.3);
+                context.drawImage(spriteImg, 136, 0);
+                break;
+            case 4:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 2.3);
+                context.drawImage(spriteImg, 133, -1);
+                break;
+            case 5:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 2.3);
+                context.drawImage(spriteImg, 136, 1);
+                break;
+            case 6:
+                context.scale(1.5, 1.5);
+                context.drawImage(spriteImg, 125, 10);
+                break;
+            case 7:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 2.3);
+                context.drawImage(spriteImg, 136, 1);
+                break;
+            case 8:
+                context.scale(1.35, 1.35);
+                context.rotate((Math.PI / 180) * 2.3);
+                context.drawImage(spriteImg, 144, -2);
+                break;
+            case 9:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 2.3);
+                context.drawImage(spriteImg, 137, -1);
                 break;
         }
 
