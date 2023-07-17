@@ -33,7 +33,7 @@ function drawCalendar(month, date, dayOfWeek) {
     resetCanvasses();
 
     // JUST FOR TESTING!!!
-    date = 9;
+    date = 19;
 
     // draws the month sprites
     displayMonthFrontLayer(month, date);
@@ -402,8 +402,8 @@ function displayDateMidLayer(date) {
         let firstDigit = Math.floor(date / 10);
         let secondDigit = date % 10;
 
-//        displayFirstDigitDateMidLayer(firstDigit);
-//        displaySecondDigitDateMidLayer(secondDigit);
+        displayFirstDigitDateMidLayer(firstDigit);
+        displaySecondDigitDateMidLayer(secondDigit);
     }
 }
 
@@ -455,6 +455,104 @@ function displaySmallDateMidLayer(date) {
             case 9:
                 context.rotate((Math.PI / 180) * 6);
                 context.drawImage(spriteImg, 113, -1);
+                break;
+        }
+
+        context.restore();
+    }
+}
+
+function displayFirstDigitDateMidLayer(firstDigit) {
+    let context = document.getElementById("middle-canvas").getContext("2d");
+
+    // sets up the sprite for the first digit of the date's background
+    var spriteImg = new Image();
+    spriteImg.src = `images/calendar/dates/${firstDigit}m.png`;
+
+    // draws the sprite based on the first digit of the date
+    spriteImg.onload = function() {
+        context.save();
+        context.scale(1.5, 1.5);
+        context.rotate((Math.PI / 180) * -3.5);
+
+        switch(firstDigit) {
+            case 1:
+                context.drawImage(spriteImg, 80, 26);
+                break;
+            case 2:
+                context.drawImage(spriteImg, 78, 33);
+                break;
+            case 3:
+                context.drawImage(spriteImg, 79, 28);
+                break;
+        }
+
+        context.restore();
+    }
+}
+
+function displaySecondDigitDateMidLayer(secondDigit) {
+    let context = document.getElementById("middle-canvas").getContext("2d");
+
+    // sets up the sprite for the second digit of the date's background
+    var spriteImg = new Image();
+    spriteImg.src = `images/calendar/dates/${secondDigit}m.png`;
+
+    // draws the sprite based on the second digit of the date
+    spriteImg.onload = function() {
+        context.save();
+
+        switch(secondDigit) {
+            case 0:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 1.1);
+                context.drawImage(spriteImg, 143, 8);
+                break;
+            // TODO: date 11 (at least) has a blank white spot. deal with it somehow?
+            case 1:
+                context.scale(1.45, 1.45);
+                context.rotate((Math.PI / 180) * 2.9);
+                context.drawImage(spriteImg, 144, 2);
+                break;
+            case 2:
+                context.scale(1.4, 1.4);
+                context.drawImage(spriteImg, 147, 18);
+                break;
+            case 3:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 1);
+                context.drawImage(spriteImg, 148, 10);
+                break;
+            case 4:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 2.5);
+                context.drawImage(spriteImg, 142, 2);
+                break;
+            case 5:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 2.8);
+                context.drawImage(spriteImg, 146, 3);
+                break;
+            case 6:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 2);
+                context.drawImage(spriteImg, 145, 10);
+                break;
+            // TODO: date 17 (at least) aslso has a blank white spot
+            case 7:
+                context.scale(1.35, 1.35);
+                context.rotate((Math.PI / 180) * 1.9);
+                context.drawImage(spriteImg, 153, 8);
+                break;
+            case 8:
+                context.scale(1.35, 1.35);
+                context.rotate((Math.PI / 180) * 2.3);
+                context.drawImage(spriteImg, 153, 5);
+                break;
+            case 9:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 1.3);
+                context.drawImage(spriteImg, 147, 12);
                 break;
         }
 
