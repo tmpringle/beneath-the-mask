@@ -33,7 +33,7 @@ function drawCalendar(month, date, dayOfWeek) {
     resetCanvasses();
 
     // JUST FOR TESTING!!!
-    date = 19;
+    date = 9;
 
     // draws the month sprites
     displayMonthFrontLayer(month, date);
@@ -41,7 +41,7 @@ function drawCalendar(month, date, dayOfWeek) {
     displayMonthBackLayer(month, date);
 
     // draws the date sprites
-//    displayDateFrontLayer(date);
+    displayDateFrontLayer(date);
     displayDateMidLayer(date);
     displayDateBackLayer(date);
 }
@@ -388,6 +388,73 @@ function displayMonthBackLayer(month, date) {
                 } else {
                     context.drawImage(spriteImg, 24, 12);
                 }
+                break;
+        }
+
+        context.restore();
+    }
+}
+
+function displayDateFrontLayer(date) {
+    if (date < 10) {
+        displaySmallDateFrontLayer(date);
+    } else {
+        let firstDigit = Math.floor(date / 10);
+        let secondDigit = date % 10;
+
+//        displayFirstDigitDateFrontLayer(firstDigit);
+//        displaySecondDigitDateFrontLayer(secondDigit);
+    }
+}
+
+function displaySmallDateFrontLayer(date) {
+    let context = document.getElementById("foreground-canvas").getContext("2d");
+
+    // sets up the sprite for the date's background
+    var spriteImg = new Image();
+    spriteImg.src = `images/calendar/dates/${date}f.png`;
+
+    // draws the sprite based on the date
+    spriteImg.onload = function() {
+        context.save();
+        context.scale(1.5, 1.5);
+
+        switch(date) {
+            case 1:
+                context.rotate((Math.PI / 180) * 6.1);
+                context.drawImage(spriteImg, 134, 1);
+                break;
+            case 2:
+                context.rotate((Math.PI / 180) * 5.9);
+                context.drawImage(spriteImg, 127, 6);
+                break;
+            case 3:
+                context.rotate((Math.PI / 180) * 7.4);
+                context.drawImage(spriteImg, 127, 0);
+                break;
+            case 4:
+                context.rotate((Math.PI / 180) * 6.5);
+                context.drawImage(spriteImg, 122, 0);
+                break;
+            case 5:
+                context.rotate((Math.PI / 180) * 6.5);
+                context.drawImage(spriteImg, 126, 1);
+                break;
+            case 6:
+                context.rotate((Math.PI / 180) * 6.9);
+                context.drawImage(spriteImg, 123, 3);
+                break;
+            case 7:
+                context.rotate((Math.PI / 180) * 6.9);
+                context.drawImage(spriteImg, 123, 1);
+                break;
+            case 8:
+                context.rotate((Math.PI / 180) * 7);
+                context.drawImage(spriteImg, 123, -1);
+                break;
+            case 9:
+                context.rotate((Math.PI / 180) * 6);
+                context.drawImage(spriteImg, 126, 4);
                 break;
         }
 
