@@ -33,7 +33,7 @@ function drawCalendar(month, date, dayOfWeek) {
     resetCanvasses();
 
     // JUST FOR TESTING!!!
-    date = 9;
+    date = 10;
 
     // draws the month sprites
     displayMonthFrontLayer(month, date);
@@ -76,6 +76,7 @@ function displayMonthFrontLayer(month, date) {
         context.save();
         context.scale(1.5, 1.5);
 
+        // TODO: replace current cases with conditional (ternary) operator
         switch(month) {
             case 1:  // january
                 if (doesDateHaveTwoDigits) {
@@ -190,6 +191,7 @@ function displayMonthMidLayer(month, date) {
         context.save();
         context.scale(1.5, 1.5);
 
+        // TODO: replace current cases with conditional (ternary) operator
         switch(month) {
             case 1:  // january
                 if (doesDateHaveTwoDigits) {
@@ -304,6 +306,7 @@ function displayMonthBackLayer(month, date) {
         context.save();
         context.scale(1.5, 1.5);
 
+        // TODO: replace current cases with conditional (ternary) operator
         switch(month) {
             case 1:  // january
                 if (doesDateHaveTwoDigits) {
@@ -402,7 +405,7 @@ function displayDateFrontLayer(date) {
         let firstDigit = Math.floor(date / 10);
         let secondDigit = date % 10;
 
-//        displayFirstDigitDateFrontLayer(firstDigit);
+        displayFirstDigitDateFrontLayer(firstDigit);
 //        displaySecondDigitDateFrontLayer(secondDigit);
     }
 }
@@ -455,6 +458,35 @@ function displaySmallDateFrontLayer(date) {
             case 9:
                 context.rotate((Math.PI / 180) * 6);
                 context.drawImage(spriteImg, 126, 4);
+                break;
+        }
+
+        context.restore();
+    }
+}
+
+function displayFirstDigitDateFrontLayer(firstDigit) {
+    let context = document.getElementById("foreground-canvas").getContext("2d");
+
+    // sets up the sprite for the first digit of the date's background
+    var spriteImg = new Image();
+    spriteImg.src = `images/calendar/dates/${firstDigit}f.png`;
+
+    // draws the sprite based on the first digit of the date
+    spriteImg.onload = function() {
+        context.save();
+        context.scale(1.5, 1.5);
+        context.rotate((Math.PI / 180) * -3.5);
+
+        switch(firstDigit) {
+            case 1:
+                context.drawImage(spriteImg, 96, 35);
+                break;
+            case 2:
+                context.drawImage(spriteImg, 90, 39);
+                break;
+            case 3:
+                context.drawImage(spriteImg, 87, 36);
                 break;
         }
 
