@@ -32,9 +32,6 @@ function getCurrentDay() {
 function drawCalendar(month, date, dayOfWeek) {
     resetCanvasses();
 
-    // JUST FOR TESTING!!!
-    date = 10;
-
     // draws the month sprites
     displayMonthFrontLayer(month, date);
     displayMonthMidLayer(month, date);
@@ -406,7 +403,7 @@ function displayDateFrontLayer(date) {
         let secondDigit = date % 10;
 
         displayFirstDigitDateFrontLayer(firstDigit);
-//        displaySecondDigitDateFrontLayer(secondDigit);
+        displaySecondDigitDateFrontLayer(secondDigit);
     }
 }
 
@@ -487,6 +484,74 @@ function displayFirstDigitDateFrontLayer(firstDigit) {
                 break;
             case 3:
                 context.drawImage(spriteImg, 87, 36);
+                break;
+        }
+
+        context.restore();
+    }
+}
+
+function displaySecondDigitDateFrontLayer(secondDigit) {
+    let context = document.getElementById("foreground-canvas").getContext("2d");
+
+    // sets up the sprite for the second digit of the date's background
+    var spriteImg = new Image();
+    spriteImg.src = `images/calendar/dates/${secondDigit}f.png`;
+
+    // draws the sprite based on the second digit of the date
+    spriteImg.onload = function() {
+        context.save();
+
+        switch(secondDigit) {
+            case 0:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 1.1);
+                context.drawImage(spriteImg, 154, 15);
+                break;
+            case 1:
+                context.scale(1.45, 1.45);
+                context.rotate((Math.PI / 180) * 2.9);
+                context.drawImage(spriteImg, 162, 10);
+                break;
+            case 2:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 0.2);
+                context.drawImage(spriteImg, 160, 23);
+                break;
+            case 3:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 1);
+                context.drawImage(spriteImg, 159, 17);
+                break;
+            case 4:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 2.5);
+                context.drawImage(spriteImg, 156, 11);
+                break;
+            case 5:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 2.8);
+                context.drawImage(spriteImg, 161, 11);
+                break;
+            case 6:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 2);
+                context.drawImage(spriteImg, 157, 16);
+                break;
+            case 7:
+                context.scale(1.35, 1.35);
+                context.rotate((Math.PI / 180) * 1.9);
+                context.drawImage(spriteImg, 163, 17);
+                break;
+            case 8:
+                context.scale(1.35, 1.35);
+                context.rotate((Math.PI / 180) * 2.3);
+                context.drawImage(spriteImg, 164, 13);
+                break;
+            case 9:
+                context.scale(1.4, 1.4);
+                context.rotate((Math.PI / 180) * 1.3);
+                context.drawImage(spriteImg, 160, 18);
                 break;
         }
 
@@ -607,7 +672,7 @@ function displaySecondDigitDateMidLayer(secondDigit) {
                 context.rotate((Math.PI / 180) * 1.1);
                 context.drawImage(spriteImg, 143, 8);
                 break;
-            // TODO: date 11 (at least) has a blank white spot. deal with it somehow?
+            // TODO: date 11 and 21 (at least) has a blank white spot. deal with it somehow?
             case 1:
                 context.scale(1.45, 1.45);
                 context.rotate((Math.PI / 180) * 2.9);
@@ -637,7 +702,7 @@ function displaySecondDigitDateMidLayer(secondDigit) {
                 context.rotate((Math.PI / 180) * 2);
                 context.drawImage(spriteImg, 145, 10);
                 break;
-            // TODO: date 17 (at least) aslso has a blank white spot
+            // TODO: date 17 and 27 (at least) aslso has a blank white spot
             case 7:
                 context.scale(1.35, 1.35);
                 context.rotate((Math.PI / 180) * 1.9);
@@ -831,3 +896,20 @@ function displayCalendar() {
 }
 
 // TODO: implement checking for date changes
+
+
+// test function that loops through months and dates
+//
+/* async function awesome() {
+    for (let i = 1; i <= 12; i++) {
+        for (let j = 1; j <= 31; j++) {
+            await new Promise(resolve => {
+                setTimeout(resolve, 1000);
+            });
+
+            drawCalendar(i, j, 0)
+        }
+    }
+}
+
+awesome(); */
