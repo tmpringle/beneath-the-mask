@@ -50,7 +50,7 @@ function resetCanvasses() {
     document.getElementById("background-canvas").getContext("2d").reset();
 }
 
-// function that actual draws the frontmost layer of the month sprite
+// function that actually draws the frontmost layer of the month sprite
 // onto the canvas. date is used for position calculations
 function displayMonthFrontLayer(month, date) {
     let context = document.getElementById("foreground-canvas").getContext("2d");

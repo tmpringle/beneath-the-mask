@@ -8,6 +8,9 @@ var isDay;
 var dayOverride = null;
 var nightOverride = null;
 
+// used to test weather changes (just for the vid, for now)
+var rainOverride = null;
+
 // self-explanatory
 function getCurrentHour() {
     return new Date().getHours();
@@ -32,7 +35,7 @@ function getDaytime() {
 
 // returns where it's raining/snowing
 function getRaining() {
-    if (curWeatherId > 3999) {  // raining or snowing
+    if (curWeatherId > 3999 || rainOverride) {  // raining or snowing
         return true;
     } else {                    // not raining/snowing or weather unknown
         return false;
