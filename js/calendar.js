@@ -11,7 +11,7 @@ function getCurrentDate() {
     return new Date().getDate();
 }
 
-// as in day of the week
+// as in day of the week (0 is Sunday - 6 is Saturday)
 function getCurrentDay() {
     return new Date().getDay();
 }
@@ -25,6 +25,7 @@ function getCurrentDay() {
      the date has one digit or two (e.g. if the date < 10 or if it's >=10)
    - the rotation for a specific month digit (say, 1) is the same whether or not
      the date has one or two digits, though
+   - the positions and orientations for days of the week are constant
    - when translating an image that's been scaled, make sure to account for the
      scaling amount for the pixel positions
 */
