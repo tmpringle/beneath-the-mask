@@ -4,7 +4,8 @@
 var isRaining;
 var isDay;
 
-// used to test daytime changes (if dayOverride is true, it's daytime; if nightOverride is true, it's nighttime)
+// used to test daytime changes (if dayOverride is true, it's daytime;
+// if nightOverride is true, it's nighttime)
 var dayOverride = null;
 var nightOverride = null;
 
@@ -25,7 +26,7 @@ function getDaytime() {
     } else if (nightOverride) {
         return false;
     }
-    
+
     if (hour >= 18 || hour < 6) {
         return false;
     } else {
@@ -35,11 +36,7 @@ function getDaytime() {
 
 // returns where it's raining/snowing
 function getRaining() {
-    if (curWeatherId > 3999 || rainOverride) {  // raining or snowing
-        return true;
-    } else {                    // not raining/snowing or weather unknown
-        return false;
-    }
+    return (curWeatherId > 3999 || rainOverride);
 }
 
 // returns video id based on weather/day conditions
@@ -47,37 +44,32 @@ function getVidId() {
     isRaining = getRaining();
     isDay = getDaytime();
 
-    if (!isDay) { // nighttime
-        if (isRaining) {
-            return vidIds[3];
-        } else {
-            return vidIds[1];
-        }
-    } else { // daytime
-        if (isRaining) {
-            return vidIds[2];
-        } else {
-            return vidIds[0];
-        }
+    if (!isDay) {
+        // nighttime
+        return isRaining ? vidIds[3] : vidIds[1];
+    } else {
+        // daytime
+        return isRaining ? vidIds[2] : vidIds[0];
     }
 }
 
-// because of google's autoplay policy (and the fact that this page is not hosted on a server), the video won't autoplay. darn
+// because of google's autoplay policy (and the fact that this page is not
+// hosted on a server), the video won't autoplay. darn
 var player;
 
 // once API is ready, this function creates the iframe and loads proper video
 function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-        height: '324',
-        width: '576',
+    player = new YT.Player("player", {
+        height: "324",
+        width: "576",
         videoId: getVidId(),
         playerVars: {
-            'playsinline': 1
+            playsinline: 1,
         },
         events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-        }
+            onReady: onPlayerReady,
+            onStateChange: onPlayerStateChange,
+        },
     });
 }
 
@@ -99,7 +91,7 @@ function refreshVid() {
     if (isReady) {
         refreshPlayer();
     } else {
-        setTimeout(refreshVid, 50)
+        setTimeout(refreshVid, 50);
     }
 }
 
@@ -135,16 +127,20 @@ function compareWeather() {
     }
 }
 
-// checks on weather periodically (if weather-tracking isn't set up or location is blocked, only day/night changes are checked)
+// checks on weather periodically (if weather-tracking isn't set up or
+// location is blocked, only day/night changes are checked)
 function weatherInterval() {
     checkNewWeather();
     compareWeather();
 }
 
-// confirms whether user would like the site to be tailored to the weather in their location
+// confirms whether user would like the site to be tailored to the weather
+// in their location
 function weatherConfirm() {
     if (!isLocationSetUp) {
-        let isWeatherConfirmed = confirm("Would you like the video to change based on the weather where you are? We will not store or process your location data in any way.");
+        let isWeatherConfirmed = confirm(
+            "Would you like the video to change based on the weather where you are? We will not store or process your location data in any way."
+        );
 
         if (isWeatherConfirmed) {
             isLocationSetUp = true;
