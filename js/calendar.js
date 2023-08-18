@@ -48,7 +48,7 @@ function drawCalendar(month, date, dayOfWeek) {
 
     // draws the day of week sprites
 //    displayDayFrontLayer(dayOfWeek);
-//    displayDayMidLayer(dayOfWeek);
+    displayDayMidLayer(dayOfWeek);
     displayDayBackLayer(dayOfWeek);
 }
 
@@ -881,6 +881,53 @@ function displaySecondDigitDateBackLayer(secondDigit) {
                 context.scale(1.4, 1.4);
                 context.rotate((Math.PI / 180) * 2.3);
                 context.drawImage(spriteImg, 137, -1);
+                break;
+        }
+
+        context.restore();
+    };
+}
+
+function displayDayMidLayer(dayOfWeek) {
+    let context = document.getElementById("middle-canvas").getContext("2d");
+
+    // sets up the sprite for the date's background
+    var spriteImg = new Image();
+    spriteImg.src = `images/calendar/days/${dayOfWeek}m.png`;
+
+    // draws the sprite based on the date
+    spriteImg.onload = function () {
+        context.save();
+        context.scale(1.5, 1.5);
+
+        switch (dayOfWeek) {
+            case 0:
+                context.rotate((Math.PI / 180) * -11.9);
+                context.drawImage(spriteImg, 82, 102);
+                break;
+            case 1:
+                context.rotate((Math.PI / 180) * -12.3);
+                context.drawImage(spriteImg, 77, 99);
+                break;
+            case 2:
+                context.rotate((Math.PI / 180) * -14.4);
+                context.drawImage(spriteImg, 64, 106);
+                break;
+            case 3:
+                context.rotate((Math.PI / 180) * -13.9);
+                context.drawImage(spriteImg, 72, 111);
+                break;
+            case 4:
+                context.rotate((Math.PI / 180) * -12.6);
+                context.drawImage(spriteImg, 68, 97);
+                break;
+            case 5:
+                context.rotate((Math.PI / 180) * -11.1);
+                context.drawImage(spriteImg, 77, 98);
+                break;
+            case 6:
+                context.rotate((Math.PI / 180) * -9.8);
+                context.drawImage(spriteImg, 86, 92);
                 break;
         }
 
