@@ -1,7 +1,7 @@
 // a potential image loader i could use:
 // https://thinkpixellab.com/pxloader/
 
-// self-explanatory (months are indexed from 0)
+// self-explanatory (i'll index months from 1)
 function getCurrentMonth() {
     return new Date().getMonth() + 1;
 }
@@ -33,6 +33,9 @@ function getCurrentDay() {
 function drawCalendar(month, date, dayOfWeek) {
     resetCanvasses();
 
+    // testing!!!
+    dayOfWeek = 6;
+
     // draws the month sprites
     displayMonthFrontLayer(month, date);
     displayMonthMidLayer(month, date);
@@ -42,6 +45,11 @@ function drawCalendar(month, date, dayOfWeek) {
     displayDateFrontLayer(date);
     displayDateMidLayer(date);
     displayDateBackLayer(date);
+
+    // draws the day of week sprites
+//    displayDayFrontLayer(dayOfWeek);
+//    displayDayMidLayer(dayOfWeek);
+    displayDayBackLayer(dayOfWeek);
 }
 
 // function that gets rid of all current drawings on the canvasses
@@ -873,6 +881,53 @@ function displaySecondDigitDateBackLayer(secondDigit) {
                 context.scale(1.4, 1.4);
                 context.rotate((Math.PI / 180) * 2.3);
                 context.drawImage(spriteImg, 137, -1);
+                break;
+        }
+
+        context.restore();
+    };
+}
+
+function displayDayBackLayer(dayOfWeek) {
+    let context = document.getElementById("background-canvas").getContext("2d");
+
+    // sets up the sprite for the date's background
+    var spriteImg = new Image();
+    spriteImg.src = `images/calendar/days/${dayOfWeek}b.png`;
+
+    // draws the sprite based on the date
+    spriteImg.onload = function () {
+        context.save();
+        context.scale(1.5, 1.5);
+
+        switch (dayOfWeek) {
+            case 0:
+                context.rotate((Math.PI / 180) * -11.2);
+                context.drawImage(spriteImg, 79, 96);
+                break;
+            case 1:
+                context.rotate((Math.PI / 180) * -12.5);
+                context.drawImage(spriteImg, 69, 93);
+                break;
+            case 2:
+                context.rotate((Math.PI / 180) * -13.4);
+                context.drawImage(spriteImg, 61, 98);
+                break;
+            case 3:
+                context.rotate((Math.PI / 180) * -13.6);
+                context.drawImage(spriteImg, 69, 102);
+                break;
+            case 4:
+                context.rotate((Math.PI / 180) * -13.5);
+                context.drawImage(spriteImg, 57, 94);
+                break;
+            case 5:
+                context.rotate((Math.PI / 180) * -10.5);
+                context.drawImage(spriteImg, 70, 89);
+                break;
+            case 6:
+                context.rotate((Math.PI / 180) * -10.2);
+                context.drawImage(spriteImg, 81, 88);
                 break;
         }
 
