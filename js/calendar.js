@@ -1,6 +1,9 @@
 // a potential image loader i could use:
 // https://thinkpixellab.com/pxloader/
 
+// global variable that's used to store previous date at last check
+var curDate;
+
 // self-explanatory (i'll index months from 1)
 function getCurrentMonth() {
     return new Date().getMonth() + 1;
@@ -1018,7 +1021,17 @@ function displayCalendar() {
     let date = getCurrentDate();
     let dayOfWeek = getCurrentDay();
 
+    curDate = date;
+
     drawCalendar(month, date, dayOfWeek);
 }
 
-// TODO: implement checking for date changes
+// checks on current date periodically
+function calendarInterval() {
+    if (curDate != getCurrentDate()) {
+        displayCalendar();
+    }
+}
+
+// checks on date changes every 5 minutes
+window.setInterval(calendarInterval, 1000 * 60 * WAIT_TIME_FOR_STATUS_CHECK);

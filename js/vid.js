@@ -1,5 +1,9 @@
 // inspired by the tane.us animal crossing music website by Brian Lee (https://tane.us/ac/)
 
+// you can change the amount of time (in minutes) between each weather/date check
+// by modifying the constant below
+const WAIT_TIME_FOR_STATUS_CHECK = 5;
+
 // global variables are used to store previous weather/day conditions
 var isRaining;
 var isDay;
@@ -164,5 +168,4 @@ function weatherStart() {
 isReady = true;
 
 // checks on weather (and day/night changes) every 5 minutes
-// you can change the amount of time between each interval by modifying the number below
-window.setInterval(weatherInterval, 1000 * 60 * 5);
+window.setInterval(weatherInterval, 1000 * 60 * WAIT_TIME_FOR_STATUS_CHECK);
