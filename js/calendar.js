@@ -16,25 +16,8 @@ function getCurrentDay() {
     return new Date().getDay();
 }
 
-/* discoveries:
-   - the positions for the date digits they stay constant (based on date) for each month.
-        - dates 1-9 have unique positions and rotations
-        - for two digit dates, the first and second digits are always in the same
-          position/rotation (respective of number)
-   - the positions and orientations for the month digit depend entirely on whether
-     the date has one digit or two (e.g. if the date < 10 or if it's >=10)
-   - the rotation for a specific month digit (say, 1) is the same whether or not
-     the date has one or two digits, though
-   - the positions and orientations for days of the week are constant
-   - when translating an image that's been scaled, make sure to account for the
-     scaling amount for the pixel positions
-*/
-
 function drawCalendar(month, date, dayOfWeek) {
     resetCanvasses();
-
-    // testing!!!
-    dayOfWeek = 6;
 
     // draws the month sprites
     displayMonthFrontLayer(month, date);
@@ -47,13 +30,14 @@ function drawCalendar(month, date, dayOfWeek) {
     displayDateBackLayer(date);
 
     // draws the day of week sprites
-//    displayDayFrontLayer(dayOfWeek);
+    displayDayFrontLayer(dayOfWeek);
     displayDayMidLayer(dayOfWeek);
     displayDayBackLayer(dayOfWeek);
 }
 
 // function that gets rid of all current drawings on the canvasses
 function resetCanvasses() {
+    document.getElementById("day-foreground-canvas").getContext("2d").reset();
     document.getElementById("foreground-canvas").getContext("2d").reset();
     document.getElementById("middle-canvas").getContext("2d").reset();
     document.getElementById("background-canvas").getContext("2d").reset();
@@ -888,6 +872,53 @@ function displaySecondDigitDateBackLayer(secondDigit) {
     };
 }
 
+function displayDayFrontLayer(dayOfWeek) {
+    let context = document.getElementById("day-foreground-canvas").getContext("2d");
+
+    // sets up the sprite for the date's background
+    var spriteImg = new Image();
+    spriteImg.src = `images/calendar/days/${dayOfWeek}f.png`;
+
+    // draws the sprite based on the date
+    spriteImg.onload = function () {
+        context.save();
+        context.scale(1.5, 1.5);
+
+        switch (dayOfWeek) {
+            case 0:
+                context.rotate((Math.PI / 180) * -12.3);
+                context.drawImage(spriteImg, 85, 110);
+                break;
+            case 1:
+                context.rotate((Math.PI / 180) * -11.7);
+                context.drawImage(spriteImg, 85, 104);
+                break;
+            case 2:
+                context.rotate((Math.PI / 180) * -14.1);
+                context.drawImage(spriteImg, 70, 111);
+                break;
+            case 3:
+                context.rotate((Math.PI / 180) * -13.4);
+                context.drawImage(spriteImg, 79, 116);
+                break;
+            case 4:
+                context.rotate((Math.PI / 180) * -13.6);
+                context.drawImage(spriteImg, 71, 108);
+                break;
+            case 5:
+                context.rotate((Math.PI / 180) * -10.2);
+                context.drawImage(spriteImg, 87, 102);
+                break;
+            case 6:
+                context.rotate((Math.PI / 180) * -10);
+                context.drawImage(spriteImg, 91, 99);
+                break;
+        }
+
+        context.restore();
+    };
+}
+
 function displayDayMidLayer(dayOfWeek) {
     let context = document.getElementById("middle-canvas").getContext("2d");
 
@@ -991,19 +1022,3 @@ function displayCalendar() {
 }
 
 // TODO: implement checking for date changes
-
-// test function that loops through months and dates
-//
-/* async function awesome() {
-    for (let i = 1; i <= 12; i++) {
-        for (let j = 1; j <= 31; j++) {
-            await new Promise(resolve => {
-                setTimeout(resolve, 1000);
-            });
-
-            drawCalendar(i, j, 0)
-        }
-    }
-}
-
-awesome(); */
