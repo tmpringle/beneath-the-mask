@@ -19,6 +19,8 @@ function getCurrentDay() {
     return new Date().getDay();
 }
 
+// calls the various functions that draw the different layers for each part
+// of the calendar element
 function drawCalendar(month, date, dayOfWeek) {
     resetCanvasses();
 
@@ -155,7 +157,7 @@ function displayMonthFrontLayer(month, date) {
     };
 }
 
-// function that actual draws the middle layer of the month sprite
+// function that actually draws the middle layer of the month sprite
 // onto the canvas. date is used for position calculations
 function displayMonthMidLayer(month, date) {
     let context = document.getElementById("middle-canvas").getContext("2d");
@@ -269,7 +271,7 @@ function displayMonthMidLayer(month, date) {
     };
 }
 
-// function that actual draws the background layer of the month sprite
+// function that actually draws the background layer of the month sprite
 // onto the canvas. date is used for position calculations
 function displayMonthBackLayer(month, date) {
     let context = document.getElementById("background-canvas").getContext("2d");
@@ -383,6 +385,8 @@ function displayMonthBackLayer(month, date) {
     };
 }
 
+// function that calls certain functions based on whether we need to
+// draw a date < 10 or a date >= 10 on the front layer
 function displayDateFrontLayer(date) {
     if (date < 10) {
         displaySmallDateFrontLayer(date);
@@ -395,6 +399,8 @@ function displayDateFrontLayer(date) {
     }
 }
 
+// function that actually draws the foreground layer of the date sprite
+// onto the canvas for dates < 10
 function displaySmallDateFrontLayer(date) {
     let context = document.getElementById("foreground-canvas").getContext("2d");
 
@@ -450,6 +456,8 @@ function displaySmallDateFrontLayer(date) {
     };
 }
 
+// function that actually draws the foreground layer of the first digit
+// of the date sprite (i.e. the '3' in '31') onto the canvas for dates >= 10
 function displayFirstDigitDateFrontLayer(firstDigit) {
     let context = document.getElementById("foreground-canvas").getContext("2d");
 
@@ -479,6 +487,8 @@ function displayFirstDigitDateFrontLayer(firstDigit) {
     };
 }
 
+// function that actually draws the foreground layer of the second digit
+// of the date sprite (i.e. the '1' in '31') onto the canvas for dates >= 10
 function displaySecondDigitDateFrontLayer(secondDigit) {
     let context = document.getElementById("foreground-canvas").getContext("2d");
 
@@ -547,6 +557,8 @@ function displaySecondDigitDateFrontLayer(secondDigit) {
     };
 }
 
+// function that calls certain functions based on whether we need to
+// draw a date < 10 or a date >= 10 on the middle layer
 function displayDateMidLayer(date) {
     if (date < 10) {
         displaySmallDateMidLayer(date);
@@ -559,6 +571,8 @@ function displayDateMidLayer(date) {
     }
 }
 
+// function that actually draws the midground layer of the date sprite
+// onto the canvas for dates < 10
 function displaySmallDateMidLayer(date) {
     let context = document.getElementById("middle-canvas").getContext("2d");
 
@@ -614,6 +628,8 @@ function displaySmallDateMidLayer(date) {
     };
 }
 
+// function that actually draws the midground layer of the first digit
+// of the date sprite (i.e. the '3' in '31') onto the canvas for dates >= 10
 function displayFirstDigitDateMidLayer(firstDigit) {
     let context = document.getElementById("middle-canvas").getContext("2d");
 
@@ -643,6 +659,8 @@ function displayFirstDigitDateMidLayer(firstDigit) {
     };
 }
 
+// function that actually draws the midground layer of the second digit
+// of the date sprite (i.e. the '1' in '31') onto the canvas for dates >= 10
 function displaySecondDigitDateMidLayer(secondDigit) {
     let context = document.getElementById("middle-canvas").getContext("2d");
 
@@ -712,6 +730,8 @@ function displaySecondDigitDateMidLayer(secondDigit) {
     };
 }
 
+// function that calls certain functions based on whether we need to
+// draw a date < 10 or a date >= 10 on the back layer
 function displayDateBackLayer(date) {
     if (date < 10) {
         displaySmallDateBackLayer(date);
@@ -724,6 +744,8 @@ function displayDateBackLayer(date) {
     }
 }
 
+// function that actually draws the background layer of the date sprite
+// onto the canvas for dates < 10
 function displaySmallDateBackLayer(date) {
     let context = document.getElementById("background-canvas").getContext("2d");
 
@@ -779,6 +801,8 @@ function displaySmallDateBackLayer(date) {
     };
 }
 
+// function that actually draws the background layer of the first digit
+// of the date sprite (i.e. the '3' in '31') onto the canvas for dates >= 10
 function displayFirstDigitDateBackLayer(firstDigit) {
     let context = document.getElementById("background-canvas").getContext("2d");
 
@@ -808,6 +832,8 @@ function displayFirstDigitDateBackLayer(firstDigit) {
     };
 }
 
+// function that actually draws the background layer of the second digit
+// of the date sprite (i.e. the '1' in '31') onto the canvas for dates >= 10
 function displaySecondDigitDateBackLayer(secondDigit) {
     let context = document.getElementById("background-canvas").getContext("2d");
 
@@ -875,6 +901,8 @@ function displaySecondDigitDateBackLayer(secondDigit) {
     };
 }
 
+// function that actually draws the frontmost layer of the day of the week
+// sprite onto the canvas
 function displayDayFrontLayer(dayOfWeek) {
     let context = document
         .getElementById("day-foreground-canvas")
@@ -890,31 +918,31 @@ function displayDayFrontLayer(dayOfWeek) {
         context.scale(1.5, 1.5);
 
         switch (dayOfWeek) {
-            case 0:
+            case 0: // sunday
                 context.rotate((Math.PI / 180) * -12.3);
                 context.drawImage(spriteImg, 85, 110);
                 break;
-            case 1:
+            case 1: // monday
                 context.rotate((Math.PI / 180) * -11.7);
                 context.drawImage(spriteImg, 85, 104);
                 break;
-            case 2:
+            case 2: // tuesday
                 context.rotate((Math.PI / 180) * -14.1);
                 context.drawImage(spriteImg, 70, 111);
                 break;
-            case 3:
+            case 3: // wednesday
                 context.rotate((Math.PI / 180) * -13.4);
                 context.drawImage(spriteImg, 79, 116);
                 break;
-            case 4:
+            case 4: // thursday
                 context.rotate((Math.PI / 180) * -13.6);
                 context.drawImage(spriteImg, 71, 108);
                 break;
-            case 5:
+            case 5: // friday
                 context.rotate((Math.PI / 180) * -10.2);
                 context.drawImage(spriteImg, 87, 102);
                 break;
-            case 6:
+            case 6: // saturday
                 context.rotate((Math.PI / 180) * -10);
                 context.drawImage(spriteImg, 91, 99);
                 break;
@@ -924,6 +952,8 @@ function displayDayFrontLayer(dayOfWeek) {
     };
 }
 
+// function that actually draws the middle layer of the day of the week
+// sprite onto the canvas
 function displayDayMidLayer(dayOfWeek) {
     let context = document.getElementById("middle-canvas").getContext("2d");
 
@@ -937,31 +967,31 @@ function displayDayMidLayer(dayOfWeek) {
         context.scale(1.5, 1.5);
 
         switch (dayOfWeek) {
-            case 0:
+            case 0: // sunday
                 context.rotate((Math.PI / 180) * -11.9);
                 context.drawImage(spriteImg, 82, 102);
                 break;
-            case 1:
+            case 1: // monday
                 context.rotate((Math.PI / 180) * -12.3);
                 context.drawImage(spriteImg, 77, 99);
                 break;
-            case 2:
+            case 2: // tuesday
                 context.rotate((Math.PI / 180) * -14.4);
                 context.drawImage(spriteImg, 64, 106);
                 break;
-            case 3:
+            case 3: // wednesday
                 context.rotate((Math.PI / 180) * -13.9);
                 context.drawImage(spriteImg, 72, 111);
                 break;
-            case 4:
+            case 4: // thursday
                 context.rotate((Math.PI / 180) * -12.6);
                 context.drawImage(spriteImg, 68, 97);
                 break;
-            case 5:
+            case 5: // friday
                 context.rotate((Math.PI / 180) * -11.1);
                 context.drawImage(spriteImg, 77, 98);
                 break;
-            case 6:
+            case 6: // saturday
                 context.rotate((Math.PI / 180) * -9.8);
                 context.drawImage(spriteImg, 86, 92);
                 break;
@@ -971,6 +1001,8 @@ function displayDayMidLayer(dayOfWeek) {
     };
 }
 
+// function that actually draws the background layer of the day of the week
+// sprite onto the canvas
 function displayDayBackLayer(dayOfWeek) {
     let context = document.getElementById("background-canvas").getContext("2d");
 
@@ -984,31 +1016,31 @@ function displayDayBackLayer(dayOfWeek) {
         context.scale(1.5, 1.5);
 
         switch (dayOfWeek) {
-            case 0:
+            case 0: // sunday
                 context.rotate((Math.PI / 180) * -11.2);
                 context.drawImage(spriteImg, 79, 96);
                 break;
-            case 1:
+            case 1: // monday
                 context.rotate((Math.PI / 180) * -12.5);
                 context.drawImage(spriteImg, 69, 93);
                 break;
-            case 2:
+            case 2: // tuesday
                 context.rotate((Math.PI / 180) * -13.4);
                 context.drawImage(spriteImg, 61, 98);
                 break;
-            case 3:
+            case 3: // wednesday
                 context.rotate((Math.PI / 180) * -13.6);
                 context.drawImage(spriteImg, 69, 102);
                 break;
-            case 4:
+            case 4: // thursday
                 context.rotate((Math.PI / 180) * -13.5);
                 context.drawImage(spriteImg, 57, 94);
                 break;
-            case 5:
+            case 5: // friday
                 context.rotate((Math.PI / 180) * -10.5);
                 context.drawImage(spriteImg, 70, 89);
                 break;
-            case 6:
+            case 6: // saturday
                 context.rotate((Math.PI / 180) * -10.2);
                 context.drawImage(spriteImg, 81, 88);
                 break;
@@ -1018,6 +1050,7 @@ function displayDayBackLayer(dayOfWeek) {
     };
 }
 
+// gets the current date info and draws the current date and day of the week
 function displayCalendar() {
     let month = getCurrentMonth();
     let date = getCurrentDate();
