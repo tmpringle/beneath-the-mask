@@ -876,7 +876,9 @@ function displaySecondDigitDateBackLayer(secondDigit) {
 }
 
 function displayDayFrontLayer(dayOfWeek) {
-    let context = document.getElementById("day-foreground-canvas").getContext("2d");
+    let context = document
+        .getElementById("day-foreground-canvas")
+        .getContext("2d");
 
     // sets up the sprite for the date's background
     var spriteImg = new Image();

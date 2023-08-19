@@ -40,7 +40,7 @@ function getDaytime() {
 
 // returns where it's raining/snowing
 function getRaining() {
-    return (curWeatherId > 3999 || rainOverride);
+    return curWeatherId > 3999 || rainOverride;
 }
 
 // returns video id based on weather/day conditions

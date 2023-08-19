@@ -30,7 +30,11 @@
             <canvas id="background-canvas" width="500" height="500"></canvas>
             <canvas id="middle-canvas" width="500" height="500"></canvas>
             <canvas id="foreground-canvas" width="500" height="500"></canvas>
-            <canvas id="day-foreground-canvas" width="500" height="500"></canvas>
+            <canvas
+                id="day-foreground-canvas"
+                width="500"
+                height="500"
+            ></canvas>
         </div>
 
         <div id="player"></div>
@@ -42,9 +46,9 @@
         // i had to place this line here instead of in one of my other script files
         // because JS didn't believe that the img element had loaded yet.
         // oh well
-        displayWeatherIcon()
+        displayWeatherIcon();
 
         // same thing for the calendar element...
-        displayCalendar()
+        displayCalendar();
     </script>
 </html>
