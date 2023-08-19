@@ -4,6 +4,10 @@
 // by modifying the constant below
 const WAIT_TIME_FOR_STATUS_CHECK = 5;
 
+// the amount of time (in ms) we wait for the weather status to update if it
+// hasn't updated yet
+const TIMEOUT_DURATION_FOR_UPDATES = 50;
+
 // global variables are used to store previous weather/day conditions
 var isRaining;
 var isDay;
@@ -95,7 +99,7 @@ function refreshVid() {
     if (isReady) {
         refreshPlayer();
     } else {
-        setTimeout(refreshVid, 50);
+        setTimeout(refreshVid, TIMEOUT_DURATION_FOR_UPDATES);
     }
 }
 
@@ -127,7 +131,7 @@ function compareWeather() {
             refreshPlayer();
         }
     } else {
-        setTimeout(compareWeather, 50);
+        setTimeout(compareWeather, TIMEOUT_DURATION_FOR_UPDATES);
     }
 }
 
