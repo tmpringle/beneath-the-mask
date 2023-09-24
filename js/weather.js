@@ -1,6 +1,8 @@
 // uses the Tomorrow.io Weather API (https://www.tomorrow.io/weather-api/)
 
-var apiKey = YOUR_KEY_HERE;
+import API_KEY from "./config.js"
+var apiKey = API_KEY;
+
 var url;
 var latitude;
 var longitude;
