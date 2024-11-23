@@ -99,7 +99,7 @@ async function loadSong(songId) {
     sourceArray[songId].loop = true;
     sourceArray[songId].connect(gainNodeArray[songId]);
 
-    // console.log(`Song ${songId} loaded`)
+    console.log(`Song ${songId} loaded`)
 }
 
 async function loadOtherSongs() {
@@ -119,6 +119,8 @@ async function loadOtherSongs() {
             sourceArray[i].connect(gainNodeArray[i]);
         }
     }
+
+    console.log("All songs loaded")
 }
 
 // song IDs:
