@@ -141,17 +141,16 @@ function weatherStart() {
 // loads and starts first song
 async function handlePlayButtonClicked() {
     if (!hasPlayButtonBeenClicked) {
-        await prepareAudioContext();
+        hasPlayButtonBeenClicked = true;
 
         // sets start song based on daytime
-        startSongId = getSongId();
-        currentSongId = startSongId;
+        currentSongId = getSongId();
 
-        await loadStartSong();
+        await prepareAudioContext();
 
+        // load and start
+        await loadSong(currentSongId);
         initialStart();
-
-        hasPlayButtonBeenClicked = true;
     }
 }
 

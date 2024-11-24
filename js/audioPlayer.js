@@ -13,15 +13,11 @@ var gainNodeArray = [null, null, null, null];
 // 3 - rainy night
 var songBufferArray = [null, null, null, null]
 
-// holds the AudioBuffer for the current song
-var currentSongBuffer;
-
-// identifies the starting song ID.
-// in the final version, the start song will depend on whether it's day or night
-var startSongId = 1;
-var currentSongId = 1;
+// identifies the current song ID
+var currentSongId;
 
 // [TEMPORARY] links to songs
+// to bypass CORS error, use http://cors-anywhere.herokuapp.com
 const linksToBTMVersions = [
     'http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=1PjBLQYiohhb3NppZiuShK2wNhruXOgs6',
     'http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=14giUGeoZdzmhgeyHuhc4GVboGmDuiRxg',
@@ -51,12 +47,12 @@ function prepareAudioContext() {
     }
 
     // sets the volume for the start song to 100%
-    gainNodeArray[startSongId].gain.value = 1;
+    gainNodeArray[currentSongId].gain.value = 1;
 }
 
 // actually plays the audio
 function initialStart() {
-    sourceArray[startSongId].start();
+    sourceArray[currentSongId].start();
     startTime = Date.now();
     playing = true;
 }
@@ -66,26 +62,7 @@ function getCurrentPosition() {
     return Date.now() - startTime;
 }
 
-// downloads the first audio track (either clear day or clear night)
-async function loadStartSong() {
-    // downloads audio track
-    const arrayBuffer = await fetch(linksToBTMVersions[startSongId],
-        ).then((res) => res.arrayBuffer()).catch(e => {
-            console.log(e);
-        });
-    songBufferArray[startSongId] = await audioCtx.decodeAudioData(arrayBuffer);
-    currentSongBuffer = songBufferArray[startSongId];
-
-    // connects song to current audio context and sets it to loop
-    let currentSource = sourceArray[startSongId];
-
-    currentSource.buffer = currentSongBuffer;
-    currentSource.loop = true;
-    currentSource.connect(gainNodeArray[startSongId]);
-}
-
-// should help for cutting down on loading times when user chooses to turn
-// weather tracking on
+// loads song based on passed-in song ID
 async function loadSong(songId) {
     const arrayBuffer = await fetch(linksToBTMVersions[songId],
     ).then((res) => res.arrayBuffer()).catch(e => {
