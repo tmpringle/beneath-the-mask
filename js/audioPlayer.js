@@ -32,7 +32,7 @@ var playing = false;
 var startTime;
 
 // gets web audio api stuff ready
-function prepareAudioContext() {
+function prepareAudioContext(startSongId) {
     audioCtx = new window.AudioContext();
 
     // initialize all buffer sources
@@ -47,7 +47,7 @@ function prepareAudioContext() {
     }
 
     // sets the volume for the start song to 100%
-    gainNodeArray[currentSongId].gain.value = 1;
+    gainNodeArray[startSongId].gain.value = 1;
 }
 
 // actually plays the audio
@@ -63,20 +63,24 @@ function getCurrentPosition() {
 }
 
 // loads song based on passed-in song ID
-async function loadSong(songId) {
-    const arrayBuffer = await fetch(linksToBTMVersions[songId],
-    ).then((res) => res.arrayBuffer()).catch(e => {
-        console.log(e);
-    });
-
-    songBufferArray[songId] = await audioCtx.decodeAudioData(arrayBuffer);
-
-    // set buffer for downloaded song to proper source
-    sourceArray[songId].buffer = songBufferArray[songId]
-    sourceArray[songId].loop = true;
-    sourceArray[songId].connect(gainNodeArray[songId]);
-
-    console.log(`Song ${songId} loaded`)
+// by default, it is whatever the current song ID is set as
+async function loadSong(songId=currentSongId) {
+    // make sure that song has not already been loaded
+    if (songBufferArray[songId] == null) {
+        const arrayBuffer = await fetch(linksToBTMVersions[songId],
+        ).then((res) => res.arrayBuffer()).catch(e => {
+            console.log(e);
+        });
+    
+        songBufferArray[songId] = await audioCtx.decodeAudioData(arrayBuffer);
+    
+        // set buffer for downloaded song to proper source
+        sourceArray[songId].buffer = songBufferArray[songId]
+        sourceArray[songId].loop = true;
+        sourceArray[songId].connect(gainNodeArray[songId]);
+    
+        console.log(`Song ${songId} loaded`)
+    }
 }
 
 async function loadOtherSongs() {
