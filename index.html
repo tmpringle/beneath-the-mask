@@ -25,6 +25,7 @@
         <script src="js/audioPlayer.js"></script>
         <script src="js/audio.js"></script>
         <!-- -->
+        <script src="js/playButton.js"></script>
         <script src="js/calendar.js"></script>
     </head>
     <body>
@@ -39,9 +40,7 @@
             ></canvas>
         </div>
 
-        <div id="playButton">
-            <button onclick="handlePlayButtonClicked()">Load and Play Start Song</button>
-        </div>
+        <div id="play-button"></div>
 
         <img id="weather-icon" onclick="weatherConfirm()" />
     </body>
@@ -54,5 +53,8 @@
 
         // same thing for the calendar element...
         displayCalendar();
+
+        // and same thing for the play button...
+        initializePlayButton();
     </script>
 </html>
