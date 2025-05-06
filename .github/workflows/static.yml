@@ -32,11 +32,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set up environment variables
-        env:
-          API_KEY: ${{ secrets.API_KEY }}
-        run: |
-          cd ./js && echo -e "const YOUR_KEY_HERE='$API_KEY';" > config.js
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
