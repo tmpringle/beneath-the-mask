@@ -55,9 +55,10 @@ function fetchWeatherData(lat = latitude, lon = longitude) {
             // video can now be loaded
             isReady = true;
         })
-        .catch(() => {
+        .catch((error) => {
             // video can now be loaded, although weather is unknown
             console.log("Weather could not be determined.");
+            console.log(error);
             isReady = true;
         });
 }
