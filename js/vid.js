@@ -161,7 +161,7 @@ function weatherConfirm() {
 function weatherStart() {
     isReady = false;
 
-    // sets up location for first-time use
+    // sets up location for first-time use and fetches weather data
     getLocation();
 
     // resets the player now that weather-tracking is enabled
