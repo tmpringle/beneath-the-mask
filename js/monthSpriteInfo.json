@@ -1,0 +1,44 @@
+{
+    "1": {
+        "front": {
+            "oneDigit": {
+                "posOffset": {
+                    "xOffset": 64,
+                    "yOffset": 38
+                }
+            },
+            "twoDigits": {
+                "posOffset": {
+                    "xOffset": 44,
+                    "yOffset": 38
+                }
+            }
+        }
+    },
+    "2": "lol",
+    "3": "lol",
+    "4": "lol",
+    "5": "lol",
+    "6": "lol",
+    "7": "lol",
+    "8": "lol",
+    "9": "lol",
+    "10": "lol",
+    "11": {
+        "front": {
+            "oneDigit": {
+                "posOffset": {
+                    "xOffset": 47,
+                    "yOffset": 33
+                }
+            },
+            "twoDigits": {
+                "posOffset": {
+                    "xOffset": 27,
+                    "yOffset": 33
+                }
+            }
+        }
+    },
+    "12": "lol"
+}
