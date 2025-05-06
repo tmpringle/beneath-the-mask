@@ -1070,3 +1070,7 @@ function calendarInterval() {
 
 // checks on date changes every 5 minutes
 window.setInterval(calendarInterval, 1000 * 60 * WAIT_TIME_FOR_STATUS_CHECK);
+
+window.onload = () => {
+    displayCalendar();
+}

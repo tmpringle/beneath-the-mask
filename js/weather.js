@@ -119,3 +119,7 @@ const weatherCodes = {
     7102: "light ice pellets",
     8000: "thunderstorm",
 };
+
+window.onload = () => {
+    displayWeatherIcon();
+}
