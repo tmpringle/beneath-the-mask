@@ -3,7 +3,7 @@ var latitude;
 var longitude;
 
 // backend weather code endpoint uses the Tomorrow.io Weather API (https://www.tomorrow.io/weather-api/)
-const PROXY_ENDPOINT_URL = "https://btm-backend-production.up.railway.app/weather-code-id";
+const PROXY_ENDPOINT_URL = "https://btm-backend-cloudflare.pringletyler1.workers.dev/weather-code-id";
 
 // identifies weather using weather codes (https://docs.tomorrow.io/reference/data-layers-weather-codes)
 var curWeatherId;
