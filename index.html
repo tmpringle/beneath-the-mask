@@ -11,19 +11,18 @@
             rel="stylesheet"
         />
         <title>Beneath the Mask...</title>
-        <!-- by MathyWizard, 2023 -->
+        <!-- by MathyWizard, 2025 -->
         <!-- Music by Shoji Meguro, copyright Atlus, Sega -->
         <script
             id="www-widgetapi-script"
             src="https://www.youtube.com/s/player/408a20d8/www-widgetapi.vflset/www-widgetapi.js"
             async
         ></script>
-        <script src="https://www.youtube.com/iframe_api"></script>
-        <script src="js/config.js"></script>
         <script src="js/weather.js"></script>
         <script src="js/vid.js"></script>
         <script src="js/calendar.js"></script>
         <script src="js/btmIds.js"></script>
+        <script src="https://www.youtube.com/iframe_api" defer></script>
     </head>
     <body>
         <div id="calendar">
@@ -47,8 +46,5 @@
         // because JS didn't believe that the img element had loaded yet.
         // oh well
         displayWeatherIcon();
-
-        // same thing for the calendar element...
-        displayCalendar();
     </script>
 </html>
