@@ -1,9 +1,9 @@
-// uses the Tomorrow.io Weather API (https://www.tomorrow.io/weather-api/)
-
-var apiKey = YOUR_KEY_HERE;
-var url;
+// user location
 var latitude;
 var longitude;
+
+// backend weather code endpoint uses the Tomorrow.io Weather API (https://www.tomorrow.io/weather-api/)
+const PROXY_ENDPOINT_URL = "https://btm-backend-cloudflare.pringletyler1.workers.dev/weather-code-id";
 
 // identifies weather using weather codes (https://docs.tomorrow.io/reference/data-layers-weather-codes)
 var curWeatherId;
@@ -37,31 +37,28 @@ function success(position) {
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
 
-    setUrl(latitude, longitude);
-
-    fetchWeatherData();
+    fetchWeatherData(latitude, longitude);
 }
 
-// fetches the current weather conditions from the Tomorrow.io API
-// uses weather codes (https://docs.tomorrow.io/reference/data-layers-weather-codes)
-function fetchWeatherData() {
-    fetch(url)
+// fetches the current weather conditions from the Tomorrow.io API through a backend proxy
+function fetchWeatherData(lat = latitude, lon = longitude) {
+    fetch(PROXY_ENDPOINT_URL + `?lat=${lat}&lon=${lon}`)
         .then((response) => response.json())
         .then((data) => {
-            curWeatherId =
-                data.data.timelines[0].intervals[0].values.weatherCode;
+            curWeatherId = data.weatherCode;
             console.log(
                 "The weather at " + latitude + ", " + longitude + " is: " + weatherCodes[curWeatherId]
             );
             setWeatherIcon();
         })
-        .then(function () {
+        .then(() => {
             // video can now be loaded
             isReady = true;
         })
-        .catch(() => {
+        .catch((error) => {
             // video can now be loaded, although weather is unknown
             console.log("Weather could not be determined.");
+            console.log(error);
             isReady = true;
         });
 }
@@ -70,11 +67,6 @@ function fetchWeatherData() {
 // video can now be loaded, although weather is unknown
 function error() {
     isReady = true;
-}
-
-// helper function designed for testing weather in other locations
-function setUrl(lat, lon) {
-    url = `https://api.tomorrow.io/v4/timelines?location=${lat}%2C%20${lon}&fields=weatherCode&timesteps=current&apikey=${apiKey}`;
 }
 
 // sets weather icon based on weather conditions
