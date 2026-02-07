@@ -30,5 +30,5 @@ eventBus.addEventListener('startedLoadingAudio', (e) => {
         setLoadingText("Loading...");
     }
 });
-eventBus.addEventListener('finishedLoadingAudio', () => {setLoadingText("Playing...");});
+eventBus.addEventListener('finishedLoadingAudio', () => {setLoadingText("Playing:");});
 eventBus.addEventListener('playingNewSong', setNowPlayingText);

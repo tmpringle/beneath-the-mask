@@ -22,18 +22,20 @@ function initializePlayButton() {
             isMouseDown = false;
             playButton.style.backgroundImage = `url('${unpressedButton}')`;
 
-            beginAudio();
+            if(!hasAudioBegun){
+                // toggle fade out
+                playButton.classList.toggle('active');
+            }
 
-            // TODO - do a fade transition instead?
-            setTimeout(() => {document.getElementById('play-button').remove()}, 100);
+            beginAudio();
         }
     });
 
     // remove play button if weather button is clicked first
     eventBus.addEventListener('weatherStartedBeforePlayClicked', () => {
-        beginAudio();
+        // toggle fade out
+        playButton.classList.toggle('active');
 
-        // TODO - do a fade transition instead?
-        setTimeout(() => {document.getElementById('play-button').remove()}, 100);
+        beginAudio();
     });
 }
