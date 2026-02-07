@@ -27,8 +27,13 @@
         <script src="js/playButton.js"></script>
         <script src="js/calendar.js"></script>
         <script src="js/playerStatus.js" defer></script>
+        <script src="js/background.js" defer></script>
     </head>
     <body>
+        <video id="bg-video" class="bg-video" autoplay muted loop playsinline>
+            <source src="videos/yongenjaya.mp4" type="video/mp4">
+        </video>
+        
         <div id="calendar">
             <canvas id="background-canvas" width="500" height="500"></canvas>
             <canvas id="middle-canvas" width="500" height="500"></canvas>

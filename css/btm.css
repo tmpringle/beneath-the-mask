@@ -1,5 +1,36 @@
 body {
-    background-color: #f00003;
+    background-color: rgba(240, 0, 4, 1);
+    transition: background-color 2s ease-out;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 2s ease-out;
+}
+
+body.active::before {
+    opacity: 1;
+}
+
+.bg-video {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 2s ease-out;
+}
+
+.bg-video.active {
+    opacity: 1;
 }
 
 #player-area {
@@ -68,11 +99,4 @@ canvas {
 
 #background-canvas {
     z-index: 1;
-}
-
-@media(max-width:960px) {
-    #player {
-        width: 60vw;
-        height: 33.75vw;
-    }
 }

@@ -28,14 +28,18 @@ function initializePlayButton() {
             }
 
             beginAudio();
+
+            setTimeout(() => {playButton.remove()}, 2000);
         }
     });
 
-    // remove play button if weather button is clicked first
+    // start audio if weather button is clicked first
     eventBus.addEventListener('weatherStartedBeforePlayClicked', () => {
         // toggle fade out
         playButton.classList.toggle('active');
 
         beginAudio();
+
+        setTimeout(() => {playButton.remove()}, 2000);
     });
 }
