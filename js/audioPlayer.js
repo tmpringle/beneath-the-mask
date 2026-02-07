@@ -97,8 +97,6 @@ async function loadSong(
         });
     
         songBufferArray[songId] = await audioCtx.decodeAudioData(arrayBuffer);
-    
-        console.log(`${songs[songId].name} loaded`)
     }
 
     // (re)create buffer source node for song
@@ -109,6 +107,7 @@ async function loadSong(
     sourceArray[songId].loop = true;
     sourceArray[songId].connect(gainNodeArray[songId]);
 
+    console.log(`${songs[songId].name} loaded`)
     eventBus.dispatchEvent(new CustomEvent('finishedLoadingAudio'));
 }
 
@@ -124,17 +123,14 @@ async function initialLoadSong() {
 // 1 - clear night
 // 2 - rainy day
 // 3 - rainy night
+//
+// uses the Web Audio API to transition between songs
 function fadeInto(nextSongId) {
     // don't allow a track to fade into itself
     if (currentSongId == nextSongId) {
         return;
-    } else {
-        actualFade(nextSongId);
     }
-}
 
-// actually uses the Web Audio API to transition between songs
-function actualFade(nextSongId) {
     let timeSinceFirstSongStarted = getTimeSinceFirstSongStarted()
     let posToSeekTo = (timeSinceFirstSongStarted % LENGTH_OF_SONG_IN_MILLISECONDS) / 1000;
 

@@ -1,11 +1,23 @@
-const statusTextElement = document.getElementById('status-text');
-const songNameElement = document.getElementById('song-name');
+const playerStatusDiv = document.getElementById('player-status');
+
+const statusTextElement = document.createElement('p');
+const songNameElement = document.createElement('p');
 
 function setLoadingText(audioStatus) {
+    if(!statusTextElement.id) {
+        statusTextElement.id = 'status-text';
+        playerStatusDiv.append(statusTextElement);
+    }
+
     statusTextElement.textContent = audioStatus;
 }
 
 function setNowPlayingText(event) {
+    if (!songNameElement.id) {
+        songNameElement.id = 'song-name';
+        playerStatusDiv.append(songNameElement);
+    }
+
     songNameElement.textContent = event.detail.songName;
 }
 
