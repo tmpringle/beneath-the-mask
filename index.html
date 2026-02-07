@@ -11,18 +11,22 @@
             rel="stylesheet"
         />
         <title>Beneath the Mask...</title>
-        <!-- by MathyWizard, 2025 -->
+        <!-- by MathyWizard, 2026 -->
         <!-- Music by Shoji Meguro, copyright Atlus, Sega -->
         <script
             id="www-widgetapi-script"
             src="https://www.youtube.com/s/player/408a20d8/www-widgetapi.vflset/www-widgetapi.js"
             async
         ></script>
+        <script src="js/events.js"></script>
         <script src="js/weather.js"></script>
-        <script src="js/vid.js"></script>
+        <!-- TODO: come up with better names for these bruh -->
+        <script src="js/audioPlayer.js"></script>
+        <script src="js/audio.js"></script>
+        <!-- -->
+        <script src="js/playButton.js"></script>
         <script src="js/calendar.js"></script>
-        <script src="js/btmIds.js"></script>
-        <script src="https://www.youtube.com/iframe_api" defer></script>
+        <script src="js/playerStatus.js" defer></script>
     </head>
     <body>
         <div id="calendar">
@@ -36,7 +40,11 @@
             ></canvas>
         </div>
 
-        <div id="player"></div>
+        <div id="player-status"></div>
+
+        <div id="player-area">
+            <div id="play-button"></div>
+        </div>
 
         <img id="weather-icon" onclick="weatherConfirm()" />
     </body>
@@ -46,5 +54,11 @@
         // because JS didn't believe that the img element had loaded yet.
         // oh well
         displayWeatherIcon();
+
+        // same thing for the calendar element...
+        displayCalendar();
+
+        // and same thing for the play button...
+        initializePlayButton();
     </script>
 </html>
