@@ -22,8 +22,18 @@ function initializePlayButton() {
             isMouseDown = false;
             playButton.style.backgroundImage = `url('${unpressedButton}')`;
 
-            // begin audio
-            handlePlayButtonClicked();
+            beginAudio();
+
+            // TODO - do a fade transition instead?
+            setTimeout(() => {document.getElementById('play-button').remove()}, 100);
         }
+    });
+
+    // remove play button if weather button is clicked first
+    eventBus.addEventListener('weatherStartedBeforePlayClicked', () => {
+        beginAudio();
+
+        // TODO - do a fade transition instead?
+        setTimeout(() => {document.getElementById('play-button').remove()}, 100);
     });
 }

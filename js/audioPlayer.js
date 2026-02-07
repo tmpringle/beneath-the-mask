@@ -18,27 +18,32 @@ var currentSongId;
 
 // [TEMPORARY] links to songs
 // to bypass CORS error, use http://cors-anywhere.herokuapp.com
-const linksToBTMVersions = [
-    'http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=1PjBLQYiohhb3NppZiuShK2wNhruXOgs6',
-    'http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=14giUGeoZdzmhgeyHuhc4GVboGmDuiRxg',
-    'http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=1lWOS8DTEf6bRNI5uhgCZZtHlCw_Dmv3d',
-    'http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=1T-jKTf5hF1jCxINXwHNaOH9sOdW3Cyxf'
+const songs = [
+    {
+        "name": "Beneath the Mask -instrumental version-",
+        "link": "http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=1PjBLQYiohhb3NppZiuShK2wNhruXOgs6"
+    },
+    {
+        "name": "Beneath the Mask",
+        "link": "http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=14giUGeoZdzmhgeyHuhc4GVboGmDuiRxg"
+    },
+    {
+        "name": "Beneath the Mask -rain, instrumental version-",
+        "link": "http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=1lWOS8DTEf6bRNI5uhgCZZtHlCw_Dmv3d"
+    },
+    {
+        "name": "Beneath the Mask -rain-",
+        "link": "http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=1T-jKTf5hF1jCxINXwHNaOH9sOdW3Cyxf"
+    }
 ]
-
-// whether audio is currently playing
-var playing = false;
 
 // used to help calculate the current position in the song
 var startTime;
+const LENGTH_OF_SONG_IN_MILLISECONDS = 259464
 
 // gets web audio api stuff ready
 function prepareAudioContext(startSongId) {
     audioCtx = new window.AudioContext();
-
-    // initialize all buffer sources
-    for (let i = 0; i < 4; i++) {
-        sourceArray[i] = audioCtx.createBufferSource();
-    }
 
     // initialize all gain nodes and connect them to output
     for (let j = 0; j < 4; j++) {
@@ -54,54 +59,64 @@ function prepareAudioContext(startSongId) {
 function initialStart() {
     sourceArray[currentSongId].start();
     startTime = Date.now();
-    playing = true;
+
+    eventBus.dispatchEvent(new CustomEvent('playingNewSong', {
+        detail: {
+            songName: songs[currentSongId].name
+        }
+    }));
 }
 
-// in milliseconds, since the track started playing (NOT WITHIN THE LOOP)
-function getCurrentPosition() {
+// in milliseconds, since the first track started playing (NOT WITHIN THE LOOP)
+function getTimeSinceFirstSongStarted() {
     return Date.now() - startTime;
 }
 
 // loads song based on passed-in song ID
-// by default, it is whatever the current song ID is set as
-async function loadSong(songId=currentSongId) {
-    // make sure that song has not already been loaded
+async function loadSong(
+    songId,
+    onFirstLoad=false
+) {
+    // don't reload song if we're already playing it
+    if (!onFirstLoad && songId == currentSongId) {
+        console.log("Selected song already playing")
+        return;
+    }
+
+    eventBus.dispatchEvent(new CustomEvent('startedLoadingAudio', {
+        detail: {
+            firstLoad: onFirstLoad
+        }
+    }));
+
+    // download song if we haven't already
     if (songBufferArray[songId] == null) {
-        const arrayBuffer = await fetch(linksToBTMVersions[songId],
+        const arrayBuffer = await fetch(songs[songId].link,
         ).then((res) => res.arrayBuffer()).catch(e => {
             console.log(e);
         });
     
         songBufferArray[songId] = await audioCtx.decodeAudioData(arrayBuffer);
     
-        // set buffer for downloaded song to proper source
-        sourceArray[songId].buffer = songBufferArray[songId]
-        sourceArray[songId].loop = true;
-        sourceArray[songId].connect(gainNodeArray[songId]);
-    
-        console.log(`Song ${songId} loaded`)
+        console.log(`${songs[songId].name} loaded`)
     }
+
+    // (re)create buffer source node for song
+    sourceArray[songId] = audioCtx.createBufferSource();
+
+    // set buffer for downloaded song to proper source
+    sourceArray[songId].buffer = songBufferArray[songId]
+    sourceArray[songId].loop = true;
+    sourceArray[songId].connect(gainNodeArray[songId]);
+
+    eventBus.dispatchEvent(new CustomEvent('finishedLoadingAudio'));
 }
 
-async function loadOtherSongs() {
-    // downloads non-downloaded songs one by one
-    for (let i = 0; i < 4; i++) {
-        if (songBufferArray[i] == null) {
-            const arrayBuffer = await fetch(linksToBTMVersions[i],
-                ).then((res) => res.arrayBuffer()).catch(e => {
-                    console.log(e);
-                });
-            
-            songBufferArray[i] = await audioCtx.decodeAudioData(arrayBuffer);
-
-            // set buffer for downloaded song to proper source
-            sourceArray[i].buffer = songBufferArray[i]
-            sourceArray[i].loop = true;
-            sourceArray[i].connect(gainNodeArray[i]);
-        }
-    }
-
-    console.log("All songs loaded")
+async function initialLoadSong() {
+    await loadSong(
+        songId=currentSongId,
+        onFirstLoad=true
+    );
 }
 
 // song IDs:
@@ -109,41 +124,35 @@ async function loadOtherSongs() {
 // 1 - clear night
 // 2 - rainy day
 // 3 - rainy night
-// TODO: Transitions seem pretty clean now, but I'll need to keep an eye on them.
 function fadeInto(nextSongId) {
     // don't allow a track to fade into itself
     if (currentSongId == nextSongId) {
         return;
     } else {
-        // waits until current second is up, then fades songs
-        // (i do this because the web audio api only starts playback at full seconds)
-        let millsecondsUntilNextSecond = 1000 - (getCurrentPosition() % 1000);
-
-        // console.log("ms until next second: " + millsecondsUntilNextSecond);
-
-        setTimeout(() => { actualFade(nextSongId) }, millsecondsUntilNextSecond);
+        actualFade(nextSongId);
     }
 }
 
 // actually uses the Web Audio API to transition between songs
 function actualFade(nextSongId) {
-    let currentPosInSeconds = Math.floor(getCurrentPosition() / 1000);
+    let timeSinceFirstSongStarted = getTimeSinceFirstSongStarted()
+    let posToSeekTo = (timeSinceFirstSongStarted % LENGTH_OF_SONG_IN_MILLISECONDS) / 1000;
 
     // setting the gain/volume just to be safe
     gainNodeArray[currentSongId].gain.setValueAtTime(1, audioCtx.currentTime);
     gainNodeArray[nextSongId].gain.setValueAtTime(0, audioCtx.currentTime);
 
-    // fade out current song and fade in next song over 5 seconds
-    gainNodeArray[currentSongId].gain.linearRampToValueAtTime(0, currentPosInSeconds + 5);
-    gainNodeArray[nextSongId].gain.linearRampToValueAtTime(1, currentPosInSeconds + 5);
+    // fade out current song and fade in next song over 3 seconds
+    gainNodeArray[currentSongId].gain.linearRampToValueAtTime(0, audioCtx.currentTime + 3);
+    gainNodeArray[nextSongId].gain.linearRampToValueAtTime(1, audioCtx.currentTime + 3);
 
-    try {  // starting next song
-        sourceArray[nextSongId].start(0, currentPosInSeconds);
-    } catch {
-        // all good. i guess???
-        // gonna be honest i cannot remember why i added this try/catch
-        // it maybe helped with the transitions??? somehow???
-    }
+    sourceArray[nextSongId].start(0, posToSeekTo);
+    sourceArray[currentSongId].stop(audioCtx.currentTime + 3.01);
 
     currentSongId = nextSongId;
+    eventBus.dispatchEvent(new CustomEvent('playingNewSong', {
+        detail: {
+            songName: songs[currentSongId].name
+        }
+    }));
 }

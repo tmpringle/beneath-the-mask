@@ -20,8 +20,8 @@ var nightOverride = null;
 // used to test weather changes (just for the actual audio, for now)
 var rainOverride = null;
 
-// whether play button has been clicked once
-var hasPlayButtonBeenClicked = false
+// whether audio has started to play
+var hasAudioBegun = false
 
 // self-explanatory
 function getCurrentHour() {
@@ -136,8 +136,8 @@ function weatherStart() {
     getLocation();
 
     // if user has not pressed play button first, set up web audio API stuff
-    if (!hasPlayButtonBeenClicked) {
-        hasPlayButtonBeenClicked = true;
+    if (!hasAudioBegun) {
+        hasAudioBegun = true;
         handleWeatherStartBeforePlayClicked();
     } else {
         // loads new audio (if necessary) now that weather-tracking is enabled
@@ -149,8 +149,10 @@ function weatherStart() {
 // prepares audio context and loads then starts first song once weather is determined
 async function handleWeatherStartBeforePlayClicked() {
     if (isReady) {
+        eventBus.dispatchEvent(new CustomEvent('weatherStartedBeforePlayClicked'));
+
         prepareAudio();
-        await loadSong();
+        await initialLoadSong();
         initialStart();
 
         startInterval();
@@ -160,14 +162,14 @@ async function handleWeatherStartBeforePlayClicked() {
 }
 
 // loads and starts first song
-async function handlePlayButtonClicked() {
-    if (!hasPlayButtonBeenClicked) {
-        hasPlayButtonBeenClicked = true;
+async function beginAudio() {
+    if (!hasAudioBegun) {
+        hasAudioBegun = true;
 
         prepareAudio();
 
         // load and start the first song
-        await loadSong();
+        await initialLoadSong();
         initialStart();
 
         startInterval();
