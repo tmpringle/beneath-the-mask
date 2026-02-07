@@ -20,19 +20,19 @@ var currentSongId;
 const songs = [
     {
         "name": "Beneath the Mask -instrumental version-",
-        "link": "audio/btm_clear_day.mp3"
+        "link": "audio/btm_clear_day.ogg"
     },
     {
         "name": "Beneath the Mask",
-        "link": "audio/btm_clear_night.mp3"
+        "link": "audio/btm_clear_night.ogg"
     },
     {
         "name": "Beneath the Mask -rain, instrumental version-",
-        "link": "audio/btm_rainy_day.mp3"
+        "link": "audio/btm_rainy_day.ogg"
     },
     {
         "name": "Beneath the Mask -rain-",
-        "link": "audio/btm_rainy_night.mp3"
+        "link": "audio/btm_rainy_night.ogg"
     }
 ]
 
