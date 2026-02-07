@@ -16,24 +16,23 @@ var songBufferArray = [null, null, null, null]
 // identifies the current song ID
 var currentSongId;
 
-// [TEMPORARY] links to songs
-// to bypass CORS error, use http://cors-anywhere.herokuapp.com
+// song info
 const songs = [
     {
         "name": "Beneath the Mask -instrumental version-",
-        "link": "http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=1PjBLQYiohhb3NppZiuShK2wNhruXOgs6"
+        "link": "audio/btm_clear_day.mp3"
     },
     {
         "name": "Beneath the Mask",
-        "link": "http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=14giUGeoZdzmhgeyHuhc4GVboGmDuiRxg"
+        "link": "audio/btm_clear_night.mp3"
     },
     {
         "name": "Beneath the Mask -rain, instrumental version-",
-        "link": "http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=1lWOS8DTEf6bRNI5uhgCZZtHlCw_Dmv3d"
+        "link": "audio/btm_rainy_day.mp3"
     },
     {
         "name": "Beneath the Mask -rain-",
-        "link": "http://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=download&id=1T-jKTf5hF1jCxINXwHNaOH9sOdW3Cyxf"
+        "link": "audio/btm_rainy_night.mp3"
     }
 ]
 
