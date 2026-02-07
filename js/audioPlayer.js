@@ -61,7 +61,8 @@ function initialStart() {
 
     eventBus.dispatchEvent(new CustomEvent('playingNewSong', {
         detail: {
-            songName: songs[currentSongId].name
+            songName: songs[currentSongId].name,
+            firstLoad: true
         }
     }));
 }
@@ -147,7 +148,8 @@ function fadeInto(nextSongId) {
     currentSongId = nextSongId;
     eventBus.dispatchEvent(new CustomEvent('playingNewSong', {
         detail: {
-            songName: songs[currentSongId].name
+            songName: songs[currentSongId].name,
+            firstLoad: false
         }
     }));
 }

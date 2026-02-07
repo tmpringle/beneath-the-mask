@@ -5,4 +5,8 @@ function startBackground() {
     document.body.classList.toggle('active');
 }
 
-eventBus.addEventListener('playingNewSong', startBackground);
+eventBus.addEventListener('playingNewSong', (e) => {
+    if(e.detail.firstLoad){
+        startBackground();
+    }
+})
